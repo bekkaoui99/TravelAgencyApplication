@@ -33,5 +33,4 @@ build/
 TravelAgencyApplicationData/
 target/
 .env
-docker-compose-backend.yml
-docker-compose-frontend.yml
+

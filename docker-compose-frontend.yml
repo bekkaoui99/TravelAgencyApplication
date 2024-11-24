@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+
+  TravelAgencyFrontend:
+    container_name: TravelAgencyFrontend
+    image: hamzabekkaoui/travel-agency-frontend:latest
+    ports:
+      - "${MAPPED_FRONTEND_PORT}:${EXPOSED_FRONTEND_PORT}"
+    networks:
+      - TravelAgencyApplication
+
+networks:
+  TravelAgencyApplication:
+    driver: bridge

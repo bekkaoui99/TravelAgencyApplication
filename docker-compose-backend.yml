@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  TravelAgencyDatabase:
+    image: mongo:latest
+    container_name: TravelAgencyDatabase
+    ports:
+      - "${DATABASE_PORT}:27017"  # Map DATABASE_PORT from .env to container's port 27017
+    volumes:
+      - ./TravelAgencyApplicationData:/data/db
+    networks:
+      - TravelAgencyApplication
+
+  TravelAgencyRestApi:
+    image: hamzabekkaoui/travel-agency-restapi:latest
+    container_name: TravelAgencyRestApi
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://TravelAgencyDatabase:${DEFAULT_DATABASE_PORT}/${DATABASE_NAME}
+      DATA_MONGO_DB_URI: mongodb://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@TravelAgencyDatabase:${DEFAULT_DATABASE_PORT}/${DATABASE_NAME}
+      APP_SECURITY_JWT_SECRET_KEY: ${APP_SECURITY_JWT_SECRET_KEY}
+      CLOUDINARY_ACCOUNT_NAME: ${CLOUDINARY_ACCOUNT_NAME}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
+      SERVER_PORT: ${EXPOSED_REST_API_PORT}
+    depends_on:
+      - TravelAgencyDatabase
+    ports:
+      - "${MAPPED_REST_API_PORT}:${EXPOSED_REST_API_PORT}"
+    networks:
+      - TravelAgencyApplication
+
+  TravelAgencyFrontend:
+    container_name: TravelAgencyFrontend
+    image: hamzabekkaoui/travel-agency-frontend:latest
+    ports:
+      - "${MAPPED_FRONTEND_PORT}:${EXPOSED_FRONTEND_PORT}"
+    networks:
+      - TravelAgencyApplication
+    depends_on:
+      - TravelAgencyRestApi
+
+networks:
+  TravelAgencyApplication:
+    driver: bridge
