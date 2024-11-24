@@ -1,0 +1,70 @@
+<div class="">
+
+  <h2 class="text-white py-2 px-3 text-center text-4xl">{{ 'app.title' | translate }}</h2>
+
+  <div class="cursor-pointer flex justify-center items-center gap-x-3 mx-3 my-2 py-3 px-3"
+       [ngClass]="{ 'rounded-3xl bg-customBlue': activeLink === 'dashboard' }"
+       (click)="setActiveLink('dashboard')">
+    <img class="" src="../../../assets/icons/dashboard.png">
+    <a routerLink="home" class="text-white text-xl">{{ 'menu.dashboard' | translate }}</a>
+  </div>
+
+  <p class="mx-6 my-1 py-2 px-3 text-white text-xl">{{ 'menu.content' | translate }}</p>
+
+  <ul>
+    <li class="cursor-pointer flex justify-start items-center gap-x-3 mx-6 my-1 py-3 px-3"
+        [ngClass]="{ 'rounded-3xl bg-customBlue': activeLink === 'reservation' }"
+        (click)="setActiveLink('reservation')">
+      <img class="" src="../../../assets/icons/voyage.png">
+      <a routerLink="reservation" class="text-white text-xl">{{ 'menu.reservation' | translate }}</a>
+    </li>
+    <li class="cursor-pointer flex justify-start items-center gap-x-3 mx-6 my-3 py-3 px-3"
+        [ngClass]="{ 'rounded-3xl bg-customBlue': activeLink === 'travel' }"
+        (click)="setActiveLink('travel')">
+      <img class="" src="../../../assets/icons/voyage.png">
+      <a routerLink="travel" class="text-white text-xl">{{ 'menu.travel' | translate }}</a>
+    </li>
+    <li class="cursor-pointer flex justify-start items-center gap-x-3 mx-6 my-3 py-3 px-3"
+        [ngClass]="{ 'rounded-3xl bg-customBlue': activeLink === 'dayTrip' }"
+        (click)="setActiveLink('dayTrip')">
+      <img class="icons" src="../../../assets/icons/journee.png">
+      <a routerLink="dayTrip" class="text-white text-xl">{{ 'menu.dayTrips' | translate }}</a>
+    </li>
+    <li class="cursor-pointer flex justify-start items-center gap-x-3 mx-6 my-3 py-3 px-3"
+        [ngClass]="{ 'rounded-3xl bg-customBlue': activeLink === 'activity' }"
+        (click)="setActiveLink('activity')">
+      <img class="icons" src="../../../assets/icons/activitie.png">
+      <a routerLink="activity" class="text-white text-xl">{{ 'menu.activities' | translate }}</a>
+    </li>
+    <li class="cursor-pointer flex justify-start items-center gap-x-3 mx-6 my-3 py-3 px-3"
+        [ngClass]="{ 'rounded-3xl bg-customBlue': activeLink === 'hotel' }"
+        (click)="setActiveLink('hotel')">
+      <img class="icons" src="../../../assets/icons/hotel.png">
+      <a routerLink="hotel" class="text-white text-xl">{{ 'menu.hotels' | translate }}</a>
+    </li>
+  </ul>
+
+  <p class="mx-6 my-1 py-2 px-3 text-white text-xl">{{ 'menu.users' | translate }}</p>
+
+  <ul>
+    <li class="cursor-pointer flex justify-start items-center gap-x-3 mx-6 my-1 py-3 px-3"
+        [ngClass]="{ 'rounded-3xl bg-customBlue': activeLink === 'client' }"
+        (click)="setActiveLink('client')">
+      <img class="" src="../../../assets/icons/client.png">
+      <a routerLink="client" class="text-white text-xl">{{ 'menu.client' | translate }}</a>
+    </li>
+    <li class="cursor-pointer flex justify-start items-center gap-x-3 mx-6 my-3 py-3 px-3"
+        [ngClass]="{ 'rounded-3xl bg-customBlue': activeLink === 'guide' }"
+        (click)="setActiveLink('guide')">
+      <img class="icons" src="../../../assets/icons/client.png">
+      <a routerLink="guide" class="text-white text-xl">{{ 'menu.guide' | translate }}</a>
+    </li>
+    <li class="cursor-pointer flex justify-start items-center gap-x-3 mx-6 my-3 py-3 px-3"
+        [ngClass]="{ 'rounded-3xl bg-customBlue': activeLink === 'statistic' }"
+        (click)="setActiveLink('statistic')">
+      <img class="icons" src="../../../assets/icons/hotel.png">
+      <a routerLink="statistic" class="text-white text-xl">{{ 'menu.statistics' | translate }}</a>
+    </li>
+  </ul>
+
+</div>

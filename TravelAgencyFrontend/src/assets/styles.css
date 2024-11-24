@@ -1,0 +1,97 @@
+@font-face {
+    font-family: 'Averta-Black';
+    src: url('fonts/averta-black.otf') format('opentype');
+  }
+  @font-face {
+    font-family: 'Rubik Medium';
+    src: url('fonts/Rubik-Medium.ttf') format('opentype');
+  }
+
+  @font-face {
+    font-family: 'Rubik Regular';
+    src: url('fonts/Rubik-Regular.ttf') format('opentype');
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Rubik';
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 265px;
+    height: 100vh;
+    background-color: #091C38;
+    color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .sidebar a {
+      text-decoration: none;
+      color: white;
+  }
+
+  .sidebar h2 {
+    font-family: averta-black;
+    font-size: 52px;
+    margin: 10px 0px;
+  }
+
+  .sidebar p {
+    font-family: rubik;
+    font-weight: 500;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+
+  .sidebar .icons {
+      margin-right: 15px;
+  }
+
+  .sidebar ul {
+    padding: 0px;
+}
+
+.sidebar .separ {
+    background-color: #707070;
+    height: 0.1px;
+    margin: 15px 7px;
+    opacity: 16%;
+}
+  .sidebar a, .sidebar li {
+    font-family: rubik;
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+  .sidebar .title {
+    text-align: center;
+  }
+
+  
+
+  .sidebar li {
+    list-style: none;
+    
+  }
+
+  .sidebar a {
+    padding: 10px 20px;
+    border-radius: 25px;
+    display: block;
+  }
+  .sidebar a.actif {
+    background-color: #0058D3;
+  }
+
+  
+  .content {
+    width: 100%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    height: 100vh;
+    box-sizing: border-box;
+  }
+  

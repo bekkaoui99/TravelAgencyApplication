@@ -1,0 +1,186 @@
+<app-loading [isLoading]="isLoading"></app-loading>
+
+<div class="w-full h-full bg-gray-100 p-10">
+  <form [formGroup]="dayTripForm" (ngSubmit)="createDayTrip()" class="space-y-4 mx-10">
+
+    <!-- Title and Destination -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="mb-5">
+        <label for="title" class="block text-gray-700 text-sm font-bold mb-2">
+          {{ 'dayTripComponent.form.input.title' | translate }}
+        </label>
+        <input id="title" type="text" formControlName="title"
+               placeholder="{{ 'dayTripComponent.form.input.title' | translate }}"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+        <div *ngIf="dayTripForm.get('title')?.touched && dayTripForm.get('title')?.invalid" class="text-red-500 text-xs mt-2">
+          {{ 'dayTripComponent.form.inputValidation.title' | translate }}
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <label for="destination" class="block text-gray-700 text-sm font-bold mb-2">
+          {{ 'dayTripComponent.form.input.destination' | translate }}
+        </label>
+        <input id="destination" type="text" formControlName="destination"
+               placeholder="{{ 'dayTripComponent.form.input.destination' | translate }}"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+        <div *ngIf="dayTripForm.get('destination')?.touched && dayTripForm.get('destination')?.invalid" class="text-red-500 text-xs mt-2">
+          {{ 'dayTripComponent.form.inputValidation.destination' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Status and Activity Guide -->
+    <div class="flex flex-wrap -mx-3 mb-4">
+      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label for="status" class="block text-gray-700 text-sm font-bold mb-2">
+          {{ 'dayTripComponent.form.input.status' | translate }}
+        </label>
+        <input id="status" type="text" formControlName="status"
+               placeholder="{{ 'dayTripComponent.form.input.status' | translate }}"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+        <div *ngIf="dayTripForm.get('status')?.touched && dayTripForm.get('status')?.invalid" class="text-red-500 text-xs mt-2">
+          {{ 'dayTripComponent.form.inputValidation.status' | translate }}
+        </div>
+      </div>
+      <div class="w-full md:w-1/2 px-3">
+
+          <label for="activityGuideId" class="block text-gray-700 text-sm font-bold mb-2">
+            {{ 'dayTripComponent.form.input.activityGuideId' | translate }}
+          </label>
+          <div class="relative">
+            <select id="activityGuideId" formControlName="activityGuideId"
+                    class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10">
+              <option *ngFor="let guide of guides" [value]="guide.id">{{ guide.firstName }} {{guide.lastName}}</option>
+            </select>
+            <div *ngIf="dayTripForm.get('activityGuideId')?.touched && dayTripForm.get('activityGuideId')?.invalid" class="text-red-500 text-xs mt-2">
+              {{ 'dayTripComponent.form.inputValidation.activityGuideId' | translate }}
+            </div>
+          </div>
+
+      </div>
+    </div>
+
+
+
+    <!-- Short Description -->
+    <div class="mb-4">
+      <label for="shortDescription" class="block text-gray-700 text-sm font-bold mb-2">
+        {{ 'dayTripComponent.form.input.shortDescription' | translate }}
+      </label>
+      <textarea id="shortDescription" formControlName="shortDescription"
+                placeholder="{{ 'dayTripComponent.form.input.shortDescription' | translate }}"
+                class="shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline min-h-[120px]"></textarea>
+      <div *ngIf="dayTripForm.get('shortDescription')?.touched && dayTripForm.get('shortDescription')?.invalid" class="text-red-500 text-xs mt-2">
+        {{ 'dayTripComponent.form.inputValidation.shortDescription' | translate }}
+      </div>
+    </div>
+
+    <!-- Long Description -->
+    <div class="mb-4">
+      <label for="longDescription" class="block text-gray-700 text-sm font-bold mb-2">
+        {{ 'dayTripComponent.form.input.longDescription' | translate }}
+      </label>
+      <textarea id="longDescription" formControlName="longDescription"
+                placeholder="{{ 'dayTripComponent.form.input.longDescription' | translate }}"
+                class="shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline min-h-[120px]"></textarea>
+      <div *ngIf="dayTripForm.get('longDescription')?.touched && dayTripForm.get('longDescription')?.invalid" class="text-red-500 text-xs mt-2">
+        {{ 'dayTripComponent.form.inputValidation.longDescription' | translate }}
+      </div>
+    </div>
+
+    <!-- Images (Optional) -->
+    <div class="flex justify-end items-center">
+      <p (click)="addImage()" class="text-customBlue text-xl cursor-pointer flex items-center">
+        <span class="mr-3">
+         {{ 'dayTripComponent.form.button.addImage' | translate }}
+        </span>
+        <i class="pi pi-plus mr-2"></i>
+      </p>
+    </div>
+
+    <div formArrayName="imagesFile" class="space-y-4">
+      <div *ngFor="let image of imagesFormArray.controls; let i = index" [formGroupName]="i" class="flex items-center space-x-2">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          {{ 'activityComponent.form.input.image' | translate }} {{ i + 1 }}
+        </label>
+        <input type="file" (change)="onFileChange($event, i)"
+               class="shadow appearance-none border rounded-2xl w-1/3 bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none">
+        <img *ngIf="imagePreviews[i]" [src]="imagePreviews[i]" alt="Image Preview" class="w-32 h-32 object-cover rounded-md border">
+        <button type="button" (click)="removeImage(i)" class="bg-red-500 text-white p-2 rounded-2xl px-3 hover:bg-red-600">Remove</button>
+      </div>
+    </div>
+
+    <!-- Activities -->
+    <div class="flex justify-end items-center pt-3">
+      <p (click)="addActivity()" class="text-customBlue text-xl cursor-pointer flex items-center">
+        <span class="mr-3">
+          {{ 'dayTripComponent.form.button.addActivity' | translate }}
+        </span> <i class="pi pi-plus mr-2"></i>
+      </p>
+    </div>
+
+    <div formArrayName="activities" class="space-y-4">
+      <div *ngFor="let activity of activityFormArray.controls; let i = index" [formGroupName]="i">
+        <div class="flex flex-wrap items-end gap-4">
+          <!-- Activity Select Dropdown -->
+          <div class="flex-1">
+            <label for="activityId-{{i}}" class="text-lg font-medium mb-1">Activity {{i + 1}}</label>
+            <select id="activityId-{{i}}" formControlName="activityId"
+                    class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10">
+              <option *ngFor="let activity of activitiesList" [value]="activity.id">{{ activity.title }}</option>
+            </select>
+            <div *ngIf="activity.get('activityId')?.touched && activity.get('activityId')?.invalid" class="text-red-500 text-xs mt-2">
+              Please select an activity.
+            </div>
+          </div>
+
+          <!-- Start Time Input -->
+          <div class="flex-1">
+            <label for="startAt-{{i}}" class="text-lg font-medium mb-1">
+              {{ 'dayTripComponent.form.input.startTime' | translate }}
+            </label>
+            <input id="startAt-{{i}}" type="time" formControlName="startAt"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+            <div *ngIf="activity.get('startAt')?.touched && activity.get('startAt')?.invalid" class="text-red-500 text-xs mt-2">
+              {{ 'dayTripComponent.form.inputValidation.startAt' | translate }}
+            </div>
+          </div>
+
+          <!-- End Time Input -->
+          <div class="flex-1">
+            <label for="endAt-{{i}}" class="text-lg font-medium mb-1">
+              {{ 'dayTripComponent.form.input.endTime' | translate }}
+            </label>
+            <input id="endAt-{{i}}" type="time" formControlName="endAt"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+            <div *ngIf="activity.get('endAt')?.touched && activity.get('endAt')?.invalid" class="text-red-500 text-xs mt-2">
+              {{ 'dayTripComponent.form.inputValidation.endAt' | translate }}
+            </div>
+          </div>
+
+          <!-- Remove Activity Button -->
+          <button type="button"
+                  (click)="removeActivity(i)"
+                  class="bg-red-500 text-white p-2 rounded-2xl px-3 hover:bg-red-600">
+            {{ 'dayTripComponent.form.button.remove' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="pt-7 flex items-center justify-start gap-x-5">
+      <button type="submit"
+              class="py-3 px-5 text-white bg-customBlue rounded-2xl">
+        {{ 'dayTripComponent.form.button.add' | translate }}
+      </button>
+      <button type="button"
+              class="py-3 px-5 text-white bg-red-500 rounded-2xl"
+              (click)="onCancel()">
+        {{ 'dayTripComponent.form.button.cancel' | translate }}
+      </button>
+    </div>
+  </form>
+
+</div>

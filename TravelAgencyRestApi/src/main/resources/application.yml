@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: TravelAgencyApplication
+  data:
+    mongodb:
+      uri: ${DATA_MONGO_DB_URI}
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
+
+app:
+  security:
+    jwt:
+      secret-key: ${APP_SECURITY_JWT_SECRET_KEY}
+      expiration: 86400000 # 1 day
+      refresh-token:
+        expiration: 604800000 # 7 days
+
+
+
+cloudinary:
+  account-name: ${CLOUDINARY_ACCOUNT_NAME}
+  api:
+    key: ${CLOUDINARY_API_KEY}
+    secret: ${CLOUDINARY_API_SECRET}
+
+
+server:
+  port: ${SERVER_PORT:8808}

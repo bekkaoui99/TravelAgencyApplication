@@ -1,0 +1,334 @@
+<div *ngIf="travel" class="p-5 bg-gray-100">
+  <h1 class="text-4xl">{{travel.title}}</h1>
+
+  <div class="flex justify-center items-start gap-x-5 mt-4 pb-10">
+
+    <!-- Client List Section -->
+    <div class="w-1/2 bg-white shadow-xl rounded-3xl p-5 min-h-[36rem]">
+      <div *ngIf="travel.clients != null && travel.clients.length > 0 ; else noClients">
+        <h1 class="text-2xl mb-5">Client List:</h1>
+
+        <!-- Scrollable client list with a max height -->
+        <div class="flex-col max-h-[30rem] overflow-y-auto pr-2">
+          <!-- Loop through clients -->
+          <div *ngFor="let client of travel.clients">
+            <div class="flex justify-between items-center gap-x-5 bg-customWhite p-3 rounded-3xl mb-2">
+              <div class="flex justify-center items-center gap-x-5">
+                <img
+                  [src]="client.imageUrl"
+                  alt="client Image"
+                  class="w-24 h-24 object-cover rounded-full shadow-md"
+                />
+                <h1 class="text-xl">{{client.firstName}} {{client.lastName}}</h1>
+              </div>
+
+              <div class="flex justify-center items-center gap-x-2">
+                <button (click)="showClientDetails(travel,client)" type="button" class="py-3 px-5 text-black bg-white rounded-2xl">Details</button>
+                <button (click)="cancelReservation(travel.id , client.id)" type="button" class="py-3 px-5 text-white bg-red-500 rounded-2xl">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Clients Alert -->
+      <ng-template #noClients>
+        <div class="px-20 pt-5">
+          <p class="text-4xl text-orange-600 text-center">No clients available for this travel.</p>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- DayTrip Dates Section -->
+    <div class="w-1/2 bg-white shadow-xl rounded-3xl p-5 min-h-[30rem]">
+      <h1 class="text-2xl mb-5">Programmes :</h1>
+
+      <div class="flex-col max-h-[30rem] overflow-y-auto pr-2">
+        <div *ngIf="travel.dayTrips ; else noDayTrips">
+          <div class="flex gap-x-5">
+            <!-- Loop through dayTrips and display day and short month name -->
+            <div
+              *ngFor="let dayTrip of travel.dayTrips; let i = index"
+              class="text-center cursor-pointer rounded-xl shadow-md"
+              [ngClass]="{
+                'bg-customBlue text-white': i === selectedDayIndex,
+                'bg-customGray': i !== selectedDayIndex
+              }"
+              (click)="onDayClick(dayTrip, i)"
+            >
+              <div class="px-4 py-2">
+                <!-- Short month name -->
+                <h1 class="text-md font-semibold">
+                  {{ dayTrip.dayTripDate | date: 'MMM' }}
+                </h1>
+                <!-- Day number -->
+                <h2 class="text-2xl font-bold text-white">
+                  {{ dayTrip.dayTripDate | date: 'dd' }}
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activities Section -->
+          <div *ngIf="selectedDayTrip">
+            <h2 class="text-2xl mt-5">{{ selectedDayTrip.title }} - Activities</h2>
+
+            <!-- Scrollable activities list -->
+            <div class="h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+              <div *ngFor="let activity of selectedDayTrip.activities" class="mt-3 flex gap-x-5 items-center p-3">
+                <!-- Activity Time Section (Icons + Start/End Time) -->
+                <div class="flex flex-col items-center gap-y-2">
+                  <!-- Start Time -->
+                  <div class="flex flex-col items-center">
+                    <i class="pi pi-clock text-xl"></i> <!-- PrimeNG Clock Icon -->
+                    <p class="text-sm">{{ convertToDate(activity.startAt) | date: 'shortTime' }}</p>
+                  </div>
+
+                  <!-- End Time -->
+                  <div class="flex flex-col items-center">
+                    <i class="pi pi-clock text-xl"></i> <!-- PrimeNG Clock Icon -->
+                    <p class="text-sm">{{ convertToDate(activity.endAt) | date: 'shortTime' }}</p>
+                  </div>
+                </div>
+
+                <!-- Activity Details Section (Image + Title + Description) -->
+                <div class="flex flex-1 items-start rounded-xl bg-customGray p-2">
+                  <img
+                    [src]="activity.imagesUrl[0]"
+                    alt="activity image"
+                    class="w-24 h-24 object-cover rounded-lg shadow-md mr-3"
+                  />
+                  <div class="flex flex-col">
+                    <!-- Title -->
+                    <h3 class="text-lg font-bold text-white">{{ activity.title }}</h3>
+
+                    <!-- Short Description -->
+                    <p class="text-sm mt-1 text-white">{{ activity.shortDescription }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- No DayTrips Alert -->
+      <ng-template #noDayTrips>
+        <div class="px-20 py-5">
+          <p  class="text-4xl text-orange-600 text-center">No day trips available for this travel.</p>
+        </div>
+      </ng-template>
+    </div>
+
+  </div>
+
+  <div class="flex justify-center items-start gap-x-5 mt-4 pb-10">
+
+    <!-- companion List Section -->
+    <div class="w-1/2 bg-white shadow-xl rounded-3xl p-5 min-h-[34rem]">
+      <div *ngIf="travel.companions != null && travel.companions.length > 0 ; else noCompanion">
+        <h1 class="text-2xl mb-5">Companion List:</h1>
+
+        <!-- Scrollable client list with a max height -->
+        <div class="flex-col max-h-[32rem] overflow-y-auto pr-2">
+          <!-- Loop through clients -->
+          <div *ngFor="let companion of travel.companions">
+            <div class="flex justify-between items-center gap-x-5 bg-customWhite p-3 rounded-3xl mb-2">
+              <div class="flex justify-center items-center gap-x-5">
+                <img
+                  [src]="companion.imageUrl"
+                  alt="client Image"
+                  class="w-24 h-24 object-cover rounded-full shadow-md"
+                />
+                <div class="">
+                  <p class="text-xl">{{companion.userName}}</p>
+                  <p class="text-gray-800">
+                    <i class="pi pi-user mr-2"></i>
+                    {{companion.client.userName}}
+                  </p>
+                </div>
+
+              </div>
+
+              <div class="flex justify-center items-center gap-x-5">
+                <button  type="button" class="py-3 px-5 text-black bg-white rounded-2xl">
+                  <i class="pi pi-eye"></i>
+                </button>
+                <button  type="button" class="py-3 px-5 text-white bg-red-500 rounded-2xl">
+                  <i class="pi pi-trash"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- No Clients Alert -->
+      <ng-template #noCompanion>
+        <div class="px-20 pt-5">
+          <p class="text-4xl text-orange-600 text-center">No Companions available for this travel.</p>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Travel Details Section -->
+    <div class="w-1/2 bg-white shadow-xl rounded-3xl p-5 min-h-[34rem]">
+      <h1 class="text-2xl mb-5">Travel Details :</h1>
+
+
+      <!-- guide Details Section -->
+      <div>
+        <h1 class="text-2xl">Guide:</h1>
+        <div class="mt-4 flex justify-start items-center gap-x-5">
+          <img
+            [src]="travel.travelGuide.imageUrl"
+            alt="client Image"
+            class="w-24 h-24 object-cover rounded-full shadow-md"
+          />
+          <div class="flex flex-col">
+            <p class="text-xl mb-2">{{travel.travelGuide.lastName}} {{travel.travelGuide.firstName}}</p>
+            <p class="text-xl"><i class="pi pi-map-marker mr-1"></i> {{travel.travelGuide.country}}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transportation Details Section -->
+      <div class="mt-5">
+        <h1 class="text-2xl">Transportation:</h1>
+        <div class="mt-4 flex justify-start items-center gap-x-5">
+          <div class="w-24 h-24 flex items-center justify-center rounded-full bg-gray-100 shadow-md">
+            <img *ngIf="travel.transportType === 'BUS'" src="assets/icons/bus.png"/>
+          </div>
+          <div class="flex-col">
+            <p class="text-xl">Company: {{travel.transportCompany}}</p>
+            <p class="text-xl">Type: {{travel.transportType}}</p>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Packs Details Section -->
+      <div class="mt-5" >
+        <h1 class="text-2xl">Packs:</h1>
+        <div class="mt-4 flex justify-start items-center gap-x-5">
+         <div *ngFor="let pack of travel.packs" class="flex flex-col gap-x-2">
+           <div>
+             <h1>
+               <span class="font-medium text-xl">Name: </span>{{pack.name}}
+             </h1>
+             <h1>
+               <span class="font-medium text-xl">Additional Price: </span> {{pack.additionalPrice}}
+             </h1>
+           </div>
+         </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+<p-dialog header="Client Details" [(visible)]="displayClientDetailsDialog" [modal]="true" [style]="{width: '700px'}">
+  <ng-template pTemplate="header">
+    Client Details
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="text-sm space-y-6">
+
+      <div *ngIf="clientDetails.imageUrl" class="mt-4 flex justify-center">
+        <img [src]="clientDetails.imageUrl" alt="Selected Image" class="w-32 h-32 rounded-full border border-gray-300" />
+      </div>
+
+
+      <div class="">
+
+        <div class="my-2">
+          <h3 class="text-2xl font-semibold text-gray-800">Client Personal Information</h3>
+          <div class="mt-2 p-4 bg-gray-100 rounded-lg">
+
+            <p class="text-xl text-gray-600 mb-2">
+              <strong>FirstName: </strong> {{ clientDetails.firstName }}
+            </p>
+
+            <p class="text-xl text-gray-600 mb-2">
+              <strong>LastName: </strong> {{ clientDetails.lastName }}
+            </p>
+
+            <p class="text-xl text-gray-600 mb-2">
+              <strong>Country: </strong> {{ clientDetails.country }}
+            </p>
+          </div>
+        </div>
+
+
+
+        <div class="my-3">
+          <h3 class="text-2xl font-semibold text-gray-800">Passport Details</h3>
+          <div class="mt-2 p-4 bg-gray-100 rounded-lg">
+
+            <p class="text-xl text-gray-600 mb-2">
+              <strong>Passport Number: </strong> {{ clientDetails.passport.passportNumber }}
+            </p>
+
+            <p class="text-xl text-gray-600 mb-2">
+              <strong>Expiry Date: </strong> {{ clientDetails.passport.expiryDate }}
+            </p>
+          </div>
+        </div>
+
+        <div class="my-3" *ngIf="reservationResponse">
+          <h3 class="text-2xl font-semibold text-gray-800">Reservation Details</h3>
+          <div class="mt-2 p-4 bg-gray-100 rounded-lg">
+
+            <p class="text-xl text-gray-600 mb-2">
+              <strong>Reservation Pack: </strong> {{ reservationResponse.pack.name }}
+            </p>
+
+            <p class="text-xl text-gray-600 mb-2">
+              <strong>Reservation Payment Type: </strong> {{ reservationResponse.paymentType }}
+            </p>
+
+            <p class="text-xl text-gray-600 mb-2">
+              <strong>Reservation Payment Status: </strong> {{ reservationResponse.paymentStatus }}
+            </p>
+
+            <div class="mt-2">
+              <div *ngIf="reservationResponse.companions != null && reservationResponse.companions.length > 0 ">
+                <h1 class="text-2xl mb-2">companions List:</h1>
+                <div *ngFor="let companion of reservationResponse.companions">
+
+                  <div class="my-2">
+                    <h1 class="text-xl"> <strong>Companion Type: </strong> {{companion.companionType}} </h1>
+                    <h1 class="text-xl"><strong>Companion FullName: </strong> {{companion.firstName}} {{companion.lastName}}</h1>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <!-- No Clients Alert -->
+              <ng-template #noClients>
+                <div class="px-20 pt-5">
+                  <p class="text-4xl text-orange-600 text-center">No clients available for this travel.</p>
+                </div>
+              </ng-template>
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </ng-template>
+</p-dialog>

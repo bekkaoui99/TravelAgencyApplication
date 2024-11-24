@@ -1,0 +1,190 @@
+<app-loading [isLoading]="isLoading"></app-loading>
+
+
+<div class="w-full h-full bg-gray-100 p-10">
+  <form [formGroup]="reservationForm" (ngSubmit)="createReservation()" class="space-y-4 mx-10">
+
+
+    <div class="flex flex-wrap -mx-3 mb-4">
+
+      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label for="paymentType" class="block text-gray-700 text-sm font-bold mb-2">Payment Type</label>
+        <div class="relative">
+          <select id="paymentType" formControlName="paymentType"
+                  class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10">
+            <option selected> Select Payment Type </option>
+            <option *ngFor="let paymentType of reservationPaymentType" [value]="paymentType">{{ paymentType }}</option>
+          </select>
+          <div *ngIf="reservationForm.get('paymentType')?.touched && reservationForm.get('paymentType')?.invalid" class="text-red-500 text-xs mt-2">
+            Please select a Payment Type.
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label for="paymentStatus" class="block text-gray-700 text-sm font-bold mb-2">Payment Status</label>
+        <div class="relative">
+          <select id="paymentStatus" formControlName="paymentStatus"
+                  class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10">
+
+            <option> Select Payment Status </option>
+            <option *ngFor="let paymentStatus of reservationPaymentStatus" [value]="paymentStatus">{{ paymentStatus }}</option>
+          </select>
+          <div *ngIf="reservationForm.get('paymentStatus')?.touched && reservationForm.get('paymentStatus')?.invalid" class="text-red-500 text-xs mt-2">
+            Please select a guide.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="flex flex-wrap -mx-3 mb-4">
+
+      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label for="travelId" class="block text-gray-700 text-sm font-bold mb-2">Travel </label>
+        <div class="relative">
+          <select id="travelId" formControlName="travelId"
+                  class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10">
+            <option selected> Select Payment Type </option>
+            <option *ngFor="let travel of travels" [value]="travel.id">{{ travel.title }}</option>
+          </select>
+          <div *ngIf="reservationForm.get('travelId')?.touched && reservationForm.get('travelId')?.invalid" class="text-red-500 text-xs mt-2">
+            Please select a Payment Type.
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label for="packName" class="block text-gray-700 text-sm font-bold mb-2">Travel Pack</label>
+        <div class="relative">
+          <select id="packName" formControlName="packName"
+                  class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10">
+            <option selected> Select Pack </option>
+            <option *ngFor="let pack of travelPacks" [value]="pack.name">{{ pack.name }}</option>
+          </select>
+          <div *ngIf="reservationForm.get('packName')?.touched && reservationForm.get('packName')?.invalid" class="text-red-500 text-xs mt-2">
+            Please select a pack.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="flex flex-wrap -mx-3 mb-4">
+
+      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label for="hotelId" class="block text-gray-700 text-sm font-bold mb-2">Hotel</label>
+        <div class="relative">
+          <select id="hotelId" formControlName="hotelId"
+                  class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10">
+            <option selected> Select Payment Type </option>
+            <option *ngFor="let hotel of hotels" [value]="hotel.id">{{ hotel.name }}</option>
+          </select>
+          <div *ngIf="reservationForm.get('hotelId')?.touched && reservationForm.get('hotelId')?.invalid" class="text-red-500 text-xs mt-2">
+            Please select a Hotel.
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label for="hosting" class="block text-gray-700 text-sm font-bold mb-2">Hosting</label>
+        <input id="hosting" type="text" formControlName="hosting" placeholder="Hosting"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+
+        <div *ngIf="reservationForm.get('hosting')?.touched && reservationForm.get('hosting')?.invalid" class="text-red-500 text-xs mt-2">
+            Please select a Hosting.
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="flex flex-wrap -mx-3 mb-4">
+
+      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label for="clientId" class="block text-gray-700 text-sm font-bold mb-2">Client</label>
+        <div class="relative">
+          <select id="clientId" formControlName="clientId"
+                  class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10">
+            <option selected> Select Payment Type </option>
+            <option *ngFor="let client of clients" [value]="client.id">{{ client.firstName }} {{ client.lastName }}</option>
+          </select>
+          <div *ngIf="reservationForm.get('clientId')?.touched && reservationForm.get('clientId')?.invalid" class="text-red-500 text-xs mt-2">
+            Please select a Client.
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label for="Discount" class="block text-gray-700 text-sm font-bold mb-2">Discount</label>
+        <div class="flex gap-x-5">
+          <!-- Disable input until addDiscount() is called -->
+          <input [disabled]="!discount" id="Discount" type="number" formControlName="discount" placeholder="Discount"
+                 class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+
+          <button *ngIf="!discount" type="button" class="text-white w-1/2 px-5 bg-customBlue rounded-3xl" (click)="addDiscount()">Enable Discount</button>
+          <button *ngIf="discount" type="button" class="text-white w-1/2 px-5 bg-customBlue rounded-3xl" (click)="removeDiscount()">Disable Discount</button>
+
+        </div>
+
+        <div *ngIf="reservationForm.get('discount')?.touched && reservationForm.get('discount')?.invalid" class="text-red-500 text-xs mt-2">
+          Please add a Discount.
+        </div>
+      </div>
+
+
+    </div>
+
+    <!-- Companions Section -->
+    <!-- Add Companion Button -->
+    <div class="flex justify-end items-center pt-3">
+      <p (click)="addCompanion()" class="text-customBlue text-xl cursor-pointer flex items-center">
+        <span class="mr-3">Add Companion</span> <i class="pi pi-plus mr-2"></i>
+      </p>
+    </div>
+
+    <!-- Companions Section -->
+    <div formArrayName="companions">
+      <div *ngFor="let companionGroup of companionsFormArray.controls; let i = index" [formGroupName]="i" class="mb-4">
+        <div class="flex flex-wrap items-end gap-4">
+          <!-- Companion Select (Displays all clients) -->
+          <div class="flex-1">
+            <label for="companion" class="block text-gray-700 text-sm font-bold mt-4">Companion</label>
+            <div class="relative flex items-center">
+              <select id="companion" formControlName="companionId" class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10">
+                <option value="" disabled>Select Companion</option>
+                <option *ngFor="let companion of companions" [value]="companion.id">
+                  {{ companion.firstName }} {{ companion.lastName }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Remove Companion Button -->
+          <button type="button" (click)="removeCompanion(i)" class="bg-red-500 text-white p-2 rounded-2xl px-3 hover:bg-red-600">
+            Remove
+          </button>
+
+          <!-- Create New Companion Button -->
+          <button type="button" (click)="openNewClientModal()" class="bg-customBlue text-white p-2 rounded-2xl px-3">
+            Create New Companion
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- Submit Button -->
+    <div class="pt-7 flex items-center justify-start gap-x-5">
+      <button type="submit"
+              class="py-3 px-5 text-white bg-customBlue rounded-2xl">Reservation</button>
+      <button type="button"
+              class="py-3 px-5 text-white bg-red-500 rounded-2xl"
+              (click)="onCancel()">Cancel</button>
+    </div>
+  </form>
+
+</div>

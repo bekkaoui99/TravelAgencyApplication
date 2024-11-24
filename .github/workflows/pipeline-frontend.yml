@@ -1,0 +1,72 @@
+name: Travel Agency Frontend Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - TravelAgencyFrontend/**
+      - 'docker-compose-frontend.yml'
+      - .github/workflows/*-frontend.yml
+
+jobs:
+
+  build-image:
+    name: Build Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract project version
+        id: extract_version
+        run: |
+          cd TravelAgencyFrontend
+          echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build & Push to DockerHub
+        uses: docker/build-push-action@v5
+        with:
+          context: TravelAgencyFrontend
+          file: TravelAgencyFrontend/Dockerfile
+          push: true
+          platforms: linux/amd64
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/travel-agency-frontend:${{ steps.extract_version.outputs.VERSION }},${{ secrets.DOCKERHUB_USERNAME }}/travel-agency-frontend:latest
+
+
+  deploy:
+    name: Deploy Frontend
+    runs-on: ubuntu-latest
+    needs: [build-image]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      - name: Create deployment folder
+        run: sshpass -p "${{ secrets.VPS_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} "mkdir -p /home/TravelAgencyApplication/ci-cd/Production/FRONT_END"
+
+      - name: Copy docker-compose frontend file
+        run: sshpass -p "${{ secrets.VPS_PASSWORD }}" scp -o StrictHostKeyChecking=no docker-compose-frontend.yml ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:/home/TravelAgencyApplication/ci-cd/Production/FRONT_END/docker-compose.yml
+
+      - name: Copy env file
+        run: sshpass -p "${{ secrets.VPS_PASSWORD }}" scp -o StrictHostKeyChecking=no .env ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:/home/TravelAgencyApplication/ci-cd/Production/FRONT_END/.env
+
+      - name: Deploy
+        run: |
+          sshpass -p "${{ secrets.VPS_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOF
+          cd /home/TravelAgencyApplication/ci-cd/Production/FRONT_END
+          docker compose down
+          docker compose -f docker-compose.yml pull -q
+          docker compose -f docker-compose.yml up -d
+          EOF

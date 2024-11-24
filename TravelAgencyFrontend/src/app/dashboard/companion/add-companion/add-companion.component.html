@@ -1,0 +1,158 @@
+<app-loading [isLoading]="isLoading"></app-loading>
+
+<div class="w-full h-full bg-gray-100 p-10">
+
+  <form [formGroup]="companionForm" (ngSubmit)="createCompanion()" class="space-y-4">
+
+    <div *ngIf="selectedImageUrl" class="mt-4 flex justify-center">
+      <img [src]="selectedImageUrl" alt="Selected Image" class="w-32 h-32 rounded-full border border-gray-300" />
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+      <div class="mb-3">
+        <label for="clientId" class="block text-gray-700 text-sm font-bold">Client</label>
+        <div class="relative">
+          <select id="clientId" formControlName="clientId"
+                  class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10">
+            <option selected> Select Payment Type </option>
+            <option *ngFor="let client of clients" [value]="client.id">{{ client.firstName }} {{ client.lastName }}</option>
+          </select>
+          <div *ngIf="companionForm.get('clientId')?.touched && companionForm.get('clientId')?.invalid" class="text-red-500 text-xs mt-2">
+            Please select a Client.
+          </div>
+        </div>
+      </div>
+
+      <!-- Companion Type Dropdown -->
+
+      <div class="mb-3">
+
+        <label for="companionType" class="block text-gray-700 text-sm font-bold">Companion Type</label>
+        <select id="companionType" formControlName="companionType"
+                class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10">
+          <option value="" disabled>Select Companion Type</option>
+          <option *ngFor="let type of companionType" [value]="type">{{ type }}</option>
+        </select>
+        <div *ngIf="companionForm.get('companionType')?.touched && companionForm.get('companionType')?.invalid" class="text-red-500 text-xs mt-2">
+          Please select a Companion Type.
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+
+      <div class="mb-3">
+        <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
+        <input id="firstName" type="text" formControlName="firstName"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" placeholder="Enter First Name" />
+        <div *ngIf="companionForm.controls['firstName'].invalid && (companionForm.controls['firstName'].dirty || companionForm.controls['firstName'].touched)" class="text-red-600 text-sm">
+          First name is required and must be at least 2 characters.
+        </div>
+      </div>
+
+
+      <div class="mb-3">
+        <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+        <input id="lastName" type="text" formControlName="lastName"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" placeholder="Enter Last Name" />
+        <div *ngIf="companionForm.controls['lastName'].invalid && (companionForm.controls['lastName'].dirty || companionForm.controls['lastName'].touched)" class="text-red-600 text-sm">
+          Last name is required and must be at least 2 characters.
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="mb-3">
+        <label for="cin" class="block text-sm font-medium text-gray-700">CIN</label>
+        <input id="cin" type="text" formControlName="cin"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" placeholder="Enter CIN" />
+        <div *ngIf="companionForm.controls['cin'].invalid && (companionForm.controls['cin'].dirty || companionForm.controls['cin'].touched)" class="text-red-600 text-sm">
+          CIN is required and must be between 6 and 10 characters.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+        <input id="country" type="text" formControlName="country"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" placeholder="Enter Country" />
+        <div *ngIf="companionForm.controls['country'].invalid && (companionForm.controls['country'].dirty || companionForm.controls['country'].touched)" class="text-red-600 text-sm">
+          Country is required.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="mb-3">
+        <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+        <input id="phone" type="text" formControlName="phone"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" placeholder="Enter Phone Number" />
+        <div *ngIf="companionForm.controls['phone'].invalid && (companionForm.controls['phone'].dirty || companionForm.controls['phone'].touched)" class="text-red-600 text-sm">
+          Phone number is required and must be 10 digits.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="imageFile" class="block text-sm font-medium text-gray-700">Profile Image</label>
+        <input id="imageFile" type="file" (change)="onProfileFileSelected($event)"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+      </div>
+    </div>
+
+
+
+    <div formGroupName="passport">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="mb-8">
+          <label for="passportNumber" class="block text-sm font-medium text-gray-700">Passport Number</label>
+          <input id="passportNumber" type="text" formControlName="passportNumber"
+                 class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" placeholder="Enter Passport Number" />
+          <div *ngIf="companionForm.get('passport.passportNumber')?.invalid && (companionForm.get('passport.passportNumber')?.dirty || companionForm.get('passport.passportNumber')?.touched)" class="text-red-600 text-sm">
+            Passport number is required.
+          </div>
+        </div>
+
+        <div class="mb-8">
+          <label for="issueDate" class="block text-sm font-medium text-gray-700">Issue Date</label>
+          <input id="issueDate" type="date" formControlName="issueDate"
+                 class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+          <div *ngIf="companionForm.get('passport.issueDate')?.invalid && (companionForm.get('passport.issueDate')?.dirty || companionForm.get('passport.issueDate')?.touched)" class="text-red-600 text-sm">
+            Issue date is required.
+          </div>
+        </div>
+
+        <div class="mb-8">
+          <label for="expiryDate" class="block text-sm font-medium text-gray-700">Expiry Date</label>
+          <input id="expiryDate" type="date" formControlName="expiryDate"
+                 class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+          <div *ngIf="companionForm.get('passport.expiryDate')?.invalid && (companionForm.get('passport.expiryDate')?.dirty || companionForm.get('passport.expiryDate')?.touched)" class="text-red-600 text-sm">
+            Expiry date is required.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 flex items-center justify-start space-x-4">
+      <button
+        type="submit"
+        class="py-3 px-5 text-white bg-customBlue rounded-2xl"
+      >
+        Add Companion
+      </button>
+      <button
+        type="button"
+        class="py-3 px-5 text-white bg-red-500 rounded-2xl"
+        (click)="onCancel()"
+      >
+        Cancel
+      </button>
+
+    </div>
+  </form>
+</div>

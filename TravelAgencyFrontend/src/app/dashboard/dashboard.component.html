@@ -1,0 +1,22 @@
+<div class="flex min-h-screen">
+  <!-- Sidebar (Fixed at 20% width, only visible when sidebarVisible is true) -->
+  <app-sidebar
+    [@slideInOut]="sidebarVisible ? 'in' : 'out'"
+    [ngClass]="{'right-0 left-auto': selectedLanguage === 'ar', 'left-0 right-auto': selectedLanguage !== 'ar'}"
+    class="fixed top-0 h-full bg-customBlueSideBar z-10"
+  ></app-sidebar>
+
+  <!-- Main Section (Header + Content) -->
+  <div [ngClass]="sidebarVisible ? (selectedLanguage === 'ar' ? 'mr-[20%]' : 'ml-[20%]') : (selectedLanguage === 'ar' ? 'mr-0' : 'ml-0')" class="flex-1 flex flex-col transition-all duration-300 ease-in-out">
+    <!-- Header (Fixed and aligned with Sidebar) -->
+    <app-header (toggleSidebar)="toggleSidebar()" [sidebarVisible]="sidebarVisible"></app-header>
+
+    <!-- Spacer for Header Height -->
+    <div class="h-16"></div> <!-- Adjust height to match header height -->
+
+    <!-- Main Content Area (Below Header) -->
+    <div class="flex-1 overflow-auto"> <!-- mt-16 for header offset -->
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

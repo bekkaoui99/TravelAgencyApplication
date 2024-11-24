@@ -1,0 +1,170 @@
+
+<app-loading [isLoading]="isLoading"></app-loading>
+
+<div class="w-full h-full bg-gray-100 p-10">
+  <form [formGroup]="activityForm" (ngSubmit)="createActivity()" class="space-y-4">
+    <!-- Title and Destination -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="mb-5">
+        <label for="title" class="block text-gray-700 text-sm font-bold mb-2">
+          {{ 'activityComponent.form.input.title' | translate }}
+        </label>
+        <input id="title" type="text" formControlName="title"
+               placeholder="{{ 'activityComponent.form.input.title' | translate }}"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" required />
+        <div *ngIf="activityForm.get('title')?.touched && activityForm.get('title')?.invalid" class="text-red-500 text-sm mt-1">
+          {{ 'activityComponent.form.inputValidation.title' | translate }}
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <label for="destination" class="block text-gray-700 text-sm font-bold mb-2">
+          {{ 'activityComponent.form.input.destination' | translate }}
+        </label>
+        <input id="destination" type="text" formControlName="destination"
+               placeholder="{{ 'activityComponent.form.input.destination' | translate }}"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" required />
+        <div *ngIf="activityForm.get('destination')?.touched && activityForm.get('destination')?.invalid" class="text-red-500 text-sm mt-1">
+          {{ 'activityComponent.form.inputValidation.destination' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Type and Activity Cost Type -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="mb-5">
+        <label for="activityType" class="block text-gray-700 text-sm font-bold mb-2">
+          {{ 'activityComponent.form.input.activityType' | translate }}
+        </label>
+        <div class="relative">
+          <select id="activityType" formControlName="activityType"
+                  class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10" required>
+            <option *ngFor="let type of activityTypes" [value]="type">{{ type }}</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M7 10l5 5 5-5H7z"/>
+            </svg>
+          </div>
+        </div>
+        <div *ngIf="activityForm.get('activityType')?.touched && activityForm.get('activityType')?.invalid" class="text-red-500 text-sm mt-1">
+          {{ 'activityComponent.form.inputValidation.activityType' | translate }}
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <label for="activityCostType" class="block text-gray-700 text-sm font-bold mb-2">
+          {{ 'activityComponent.form.input.activityCostType' | translate }}
+        </label>
+        <div class="relative">
+          <select id="activityCostType" formControlName="activityCostType"
+                  class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10" required>
+            <option *ngFor="let type of activityCostTypes" [value]="type">{{ type }}</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M7 10l5 5 5-5H7z"/>
+            </svg>
+          </div>
+        </div>
+        <div *ngIf="activityForm.get('activityCostType')?.touched && activityForm.get('activityCostType')?.invalid" class="text-red-500 text-sm mt-1">
+          {{ 'activityComponent.form.inputValidation.activityCostType' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Guide ID -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="mb-5">
+        <label for="activityGuideId" class="block text-gray-700 text-sm font-bold mb-2">
+          {{ 'activityComponent.form.input.activityGuideId' | translate }}
+        </label>
+        <div class="relative">
+          <select id="activityGuideId" formControlName="activityGuideId"
+                  class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10" required>
+            <option *ngFor="let guide of guides" [value]="guide.id">{{ guide.firstName }} {{guide.lastName}}</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M7 10l5 5 5-5H7z"/>
+            </svg>
+          </div>
+        </div>
+        <div *ngIf="activityForm.get('activityGuideId')?.touched && activityForm.get('activityGuideId')?.invalid" class="text-red-500 text-sm mt-1">
+          {{ 'activityComponent.form.inputValidation.activityGuide' | translate }}
+        </div>
+      </div>
+
+      <div class="mb-5" *ngIf="activityForm.get('activityCostType')?.value === 'EXTRA_COST'">
+        <label for="activityAdditionalPrice" class="block text-gray-700 text-sm font-bold mb-2">
+          {{ 'activityComponent.form.input.activityAdditionalPrice' | translate }}
+        </label>
+        <input id="activityAdditionalPrice" type="number" formControlName="activityAdditionalPrice"
+               placeholder="{{ 'activityComponent.form.input.activityAdditionalPrice' | translate }}"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+        <div *ngIf="activityForm.get('activityAdditionalPrice')?.touched && activityForm.get('activityAdditionalPrice')?.invalid" class="text-red-500 text-sm mt-1">
+          {{ 'activityComponent.form.inputValidation.additionalPrice' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- Short Description -->
+      <div class="mb-5">
+        <label for="shortDescription" class="block text-gray-700 text-sm font-bold mb-2">
+          {{ 'activityComponent.form.input.shortDescription' | translate }}
+        </label>
+        <textarea id="shortDescription" formControlName="shortDescription"
+                  placeholder="{{ 'activityComponent.form.input.shortDescription' | translate }}"
+                  class="shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline min-h-[120px]" required></textarea>
+        <div *ngIf="activityForm.get('shortDescription')?.touched && activityForm.get('shortDescription')?.invalid" class="text-red-500 text-sm mt-1">
+          {{ 'activityComponent.form.inputValidation.shortDescription' | translate }}
+        </div>
+      </div>
+
+      <!-- Long Description -->
+      <div class="mb-5">
+        <label for="longDescription" class="block text-gray-700 text-sm font-bold mb-2">
+          {{ 'activityComponent.form.input.longDescription' | translate }}
+        </label>
+        <textarea id="longDescription" formControlName="longDescription"
+                  placeholder="{{ 'activityComponent.form.input.longDescription' | translate }}"
+                  class="shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline min-h-[120px]" required></textarea>
+        <div *ngIf="activityForm.get('longDescription')?.touched && activityForm.get('longDescription')?.invalid" class="text-red-500 text-sm mt-1">
+          {{ 'activityComponent.form.inputValidation.longDescription' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Images -->
+    <div class="flex justify-end items-center mb-2">
+      <p (click)="addImage()" class="text-customBlue text-xl cursor-pointer flex items-center">
+        <span class="mr-3">{{ 'activityComponent.form.button.addImage' | translate }}</span> <i class="pi pi-plus mr-2"></i>
+      </p>
+    </div>
+
+    <div formArrayName="imagesFile" class="space-y-4">
+      <div *ngFor="let image of imagesFormArray.controls; let i = index" [formGroupName]="i" class="flex items-center space-x-2">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          {{ 'activityComponent.form.input.image' | translate }} {{ i + 1 }}
+        </label>
+        <input type="file" (change)="onFileChange($event, i)" class="border border-gray-300 p-2 rounded-md">
+        <img *ngIf="imagePreviews[i]" [src]="imagePreviews[i]" alt="Image Preview" class="w-32 h-32 object-cover rounded-md border">
+        <button type="button" (click)="removeImage(i)" class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600">
+          {{ 'activityComponent.form.button.removeImage' | translate }}
+        </button>
+      </div>
+    </div>
+
+
+
+    <!-- Submit Button -->
+    <div class="flex justify-end mt-6">
+      <button type="submit"
+              class="bg-customBlue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
+        {{ 'activityComponent.form.button.add' | translate }}
+      </button>
+    </div>
+  </form>
+</div>
+

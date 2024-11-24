@@ -1,0 +1,144 @@
+<app-loading [isLoading]="isLoading"></app-loading>
+
+
+<div class="w-full h-full bg-gray-100 p-10">
+  <form [formGroup]="guideForm" (ngSubmit)="createGuide()" class="space-y-4">
+    <div *ngIf="selectedImageUrl" class="mt-4 flex justify-center">
+      <img [src]="selectedImageUrl" alt="Selected Image" class="w-32 h-32 rounded-full border border-gray-300" />
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="mb-4">
+        <label for="firstName" class="block text-sm font-medium text-gray-700">
+          {{ 'guideComponent.form.input.firstName' | translate }}
+        </label>
+        <input id="firstName" type="text" formControlName="firstName"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+               placeholder="{{ 'guideComponent.form.input.firstName' | translate }}" />
+        <div *ngIf="guideForm.controls['firstName'].invalid && (guideForm.controls['firstName'].dirty || guideForm.controls['firstName'].touched)"
+             class="text-red-600 text-sm">
+          {{ 'guideComponent.form.inputValidation.firstName' | translate }}
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="lastName" class="block text-sm font-medium text-gray-700">
+          {{ 'guideComponent.form.input.lastName' | translate }}
+        </label>
+        <input id="lastName" type="text" formControlName="lastName"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+               placeholder="{{ 'guideComponent.form.input.lastName' | translate }}" />
+        <div *ngIf="guideForm.controls['lastName'].invalid && (guideForm.controls['lastName'].dirty || guideForm.controls['lastName'].touched)"
+             class="text-red-600 text-sm">
+          {{ 'guideComponent.form.inputValidation.lastName' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="mb-4">
+        <label for="phone" class="block text-sm font-medium text-gray-700">
+          {{ 'guideComponent.form.input.phone' | translate }}
+        </label>
+        <input id="phone" type="text" formControlName="phone"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+               placeholder="{{ 'guideComponent.form.input.phone' | translate }}" />
+        <div *ngIf="guideForm.controls['phone'].invalid && (guideForm.controls['phone'].dirty || guideForm.controls['phone'].touched)"
+             class="text-red-600 text-sm">
+          {{ 'guideComponent.form.inputValidation.phone' | translate }}
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="country" class="block text-sm font-medium text-gray-700">
+          {{ 'guideComponent.form.input.country' | translate }}
+        </label>
+        <input id="country" type="text" formControlName="country"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+               placeholder="{{ 'guideComponent.form.input.country' | translate }}" />
+        <div *ngIf="guideForm.controls['country'].invalid && (guideForm.controls['country'].dirty || guideForm.controls['country'].touched)"
+             class="text-red-600 text-sm">
+          {{ 'guideComponent.form.inputValidation.country' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="mb-4">
+        <label for="cin" class="block text-sm font-medium text-gray-700">
+          {{ 'guideComponent.form.input.cin' | translate }}
+        </label>
+        <input id="cin" type="text" formControlName="cin"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+               placeholder="{{ 'guideComponent.form.input.cin' | translate }}" />
+        <div *ngIf="guideForm.controls['cin'].invalid && (guideForm.controls['cin'].dirty || guideForm.controls['cin'].touched)"
+             class="text-red-600 text-sm">
+          {{ 'guideComponent.form.inputValidation.cin' | translate }}
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700">
+          {{ 'guideComponent.form.input.email' | translate }}
+        </label>
+        <input id="email" type="email" formControlName="email"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+               placeholder="{{ 'guideComponent.form.input.email' | translate }}" />
+        <div *ngIf="guideForm.controls['email'].invalid && (guideForm.controls['email'].dirty || guideForm.controls['email'].touched)"
+             class="text-red-600 text-sm">
+          {{ 'guideComponent.form.inputValidation.email' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="mb-4">
+        <label for="password" class="block text-sm font-medium text-gray-700">
+          {{ 'guideComponent.form.input.password' | translate }}
+        </label>
+        <input id="password" type="password" formControlName="password"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+               placeholder="{{ 'guideComponent.form.input.password' | translate }}" />
+        <div *ngIf="guideForm.controls['password'].invalid && (guideForm.controls['password'].dirty || guideForm.controls['password'].touched)"
+             class="text-red-600 text-sm">
+          {{ 'guideComponent.form.inputValidation.password' | translate }}
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="confirmationPassword" class="block text-sm font-medium text-gray-700">
+          {{ 'guideComponent.form.input.confirmationPassword' | translate }}
+        </label>
+        <input id="confirmationPassword" type="password" formControlName="confirmationPassword"
+               class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+               placeholder="{{ 'guideComponent.form.input.confirmationPassword' | translate }}" />
+        <div *ngIf="guideForm.controls['confirmationPassword'].invalid && (guideForm.controls['confirmationPassword'].dirty || guideForm.controls['confirmationPassword'].touched)"
+             class="text-red-600 text-sm">
+          {{ 'guideComponent.form.inputValidation.confirmationPassword' | translate }}
+        </div>
+        <div *ngIf="guideForm.controls['confirmationPassword'].dirty && guideForm.controls['confirmationPassword'].value !== guideForm.controls['password'].value"
+             class="text-red-600 text-sm">
+          {{ 'guideComponent.form.inputValidation.passwordMismatch' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="imageFile" class="block text-sm font-medium text-gray-700">
+        {{ 'guideComponent.form.input.profileImage' | translate }}
+      </label>
+      <input id="imageFile" type="file" (change)="onFileSelected($event)"
+             class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+    </div>
+
+    <div class="pt-7 flex items-center justify-start gap-x-5">
+      <button type="submit" class="py-3 px-5 text-white bg-customBlue rounded-2xl">
+        {{ 'guideComponent.form.button.add' | translate }}
+      </button>
+      <button type="button" class="py-3 px-5 text-white bg-red-500 rounded-2xl" (click)="onCancel()">
+        {{ 'guideComponent.form.button.cancel' | translate }}
+      </button>
+    </div>
+  </form>
+</div>
+

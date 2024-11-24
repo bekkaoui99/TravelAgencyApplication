@@ -1,0 +1,31 @@
+<header class="bg-white shadow-md fixed w-full z-50">
+  <div class="container mx-auto flex justify-between items-center py-4 px-8">
+    <!-- Logo/Title -->
+    <h1 class="text-3xl font-bold text-customBlue cursor-pointer">
+      <a routerLink="/">Siyaha</a>
+    </h1>
+
+    <!-- Navigation Links (Visible on desktop) -->
+    <nav class="hidden md:flex items-center gap-8">
+      <a routerLink="/home" class="text-gray-600 hover:text-gray-800 transition">Home</a>
+      <a routerLink="/services" class="text-gray-600 hover:text-gray-800 transition">Services</a>
+      <a routerLink="/contact" class="text-gray-600 hover:text-gray-800 transition">Contact</a>
+      <a routerLink="/auth/login" class="bg-customBlue text-white px-4 py-1 rounded transition">Login</a>
+      <a routerLink="/auth/register" class="bg-customBlueSideBar text-white px-4 py-1 rounded transition">Sign Up</a>
+    </nav>
+
+    <!-- Hamburger Menu Icon for Mobile -->
+    <button (click)="toggleMobileMenu()" class="md:hidden text-gray-600 focus:outline-none">
+      <i class="pi pi-bars text-2xl"></i> <!-- PrimeIcons Hamburger Icon -->
+    </button>
+  </div>
+
+  <!-- Mobile Dropdown Menu (Visible on mobile only) -->
+  <div *ngIf="isMobileMenuOpen" class="md:hidden bg-white shadow-md">
+    <a routerLink="/home" class="block px-8 py-2 text-gray-600 hover:bg-gray-100">Home</a>
+    <a routerLink="/services" class="block px-8 py-2 text-gray-600 hover:bg-gray-100">Services</a>
+    <a routerLink="/contact" class="block px-8 py-2 text-gray-600 hover:bg-gray-100">Contact</a>
+    <a routerLink="/auth/login" class="block px-8 py-2 text-white bg-customBlue">Login</a>
+    <a routerLink="/auth/register" class="block px-8 py-2 text-white bg-customBlueSideBar">Sign Up</a>
+  </div>
+</header>

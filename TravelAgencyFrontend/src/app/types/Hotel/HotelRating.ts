@@ -1,0 +1,7 @@
+export enum HotelRating {
+  ONE_STAR = "ONE_STAR",
+  TWO_STARS = "TWO_STARS",
+  THREE_STARS = "THREE_STARS",
+  FOUR_STARS = "FOUR_STARS",
+  FIVE_STARS = "FIVE_STARS"
+}

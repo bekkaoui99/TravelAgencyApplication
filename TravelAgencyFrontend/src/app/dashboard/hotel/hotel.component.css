@@ -1,0 +1,17 @@
+:host ::ng-deep .p-cell-editing {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+/* Optional: Custom styles for p-dropdown to ensure full width and correct appearance */
+.p-dropdown {
+  width: 100% !important;
+  border-radius: 0.75rem; /* This matches the rounded-xl class */
+}
+
+.p-dropdown .p-dropdown-label {
+  padding: 0.75rem; /* This matches the py-3 class */
+}
+
+.p-dropdown .p-dropdown-trigger {
+  border-radius: 0.75rem; /* Ensures the trigger matches the dropdown's rounded corners */
+}

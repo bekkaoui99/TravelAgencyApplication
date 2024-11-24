@@ -1,0 +1,241 @@
+<app-loading [isLoading]="isLoading"></app-loading>
+
+<div class="w-full h-full bg-gray-100 p-10">
+  <form [formGroup]="clientForm" class="space-y-4" (submit)="createClient()">
+    <div class="flex justify-center items-center mb-14 gap-x-10">
+      <button
+        (click)="setStep(1)"
+        type="button"
+        [ngClass]="{ 'bg-customBlue text-white': currentStep === 1, 'bg-gray-300 text-black': currentStep !== 1 }"
+        class="py-2 px-4 rounded-2xl"
+      >
+        {{ 'clientComponent.form.clientSection' | translate }}
+      </button>
+      <button
+        (click)="setStep(2)"
+        type="button"
+        [ngClass]="{ 'bg-customBlue text-white': currentStep === 2, 'bg-gray-300 text-black': currentStep !== 2 }"
+        class="py-2 px-4 rounded-2xl ml-2"
+      >
+        {{ 'clientComponent.form.passportSection' | translate }}
+      </button>
+    </div>
+
+    <!-- Step 1 -->
+    <div *ngIf="currentStep === 1">
+      <div formGroupName="clientInformation">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="mb-8">
+            <label for="firstName" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.firstName' | translate }}
+            </label>
+            <input id="firstName" type="text" formControlName="firstName"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+                   [placeholder]="'clientComponent.form.input.firstName' | translate" />
+            <div *ngIf="clientForm.get('clientInformation.firstName')?.invalid && (clientForm.get('clientInformation.firstName')?.dirty || clientForm.get('clientInformation.firstName')?.touched)"
+                 class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.firstName' | translate }}
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <label for="lastName" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.lastName' | translate }}
+            </label>
+            <input id="lastName" type="text" formControlName="lastName"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+                   [placeholder]="'clientComponent.form.input.lastName' | translate" />
+            <div *ngIf="clientForm.get('clientInformation.lastName')?.invalid && (clientForm.get('clientInformation.lastName')?.dirty || clientForm.get('clientInformation.lastName')?.touched)"
+                 class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.lastName' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="mb-8">
+            <label for="phone" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.phone' | translate }}
+            </label>
+            <input id="phone" type="text" formControlName="phone"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+                   [placeholder]="'clientComponent.form.input.phone' | translate" />
+            <div *ngIf="clientForm.get('clientInformation.phone')?.invalid && (clientForm.get('clientInformation.phone')?.dirty || clientForm.get('clientInformation.phone')?.touched)"
+                 class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.phone' | translate }}
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <label for="country" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.country' | translate }}
+            </label>
+            <input id="country" type="text" formControlName="country"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+                   [placeholder]="'clientComponent.form.input.country' | translate" />
+            <div *ngIf="clientForm.get('clientInformation.country')?.invalid && (clientForm.get('clientInformation.country')?.dirty || clientForm.get('clientInformation.country')?.touched)"
+                 class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.country' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="mb-8">
+            <label for="email" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.email' | translate }}
+            </label>
+            <input id="email" type="email" formControlName="email"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+                   [placeholder]="'clientComponent.form.input.email' | translate" />
+            <div *ngIf="clientForm.get('clientInformation.email')?.invalid && (clientForm.get('clientInformation.email')?.dirty || clientForm.get('clientInformation.email')?.touched)"
+                 class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.email' | translate }}
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <label for="cin" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.cin' | translate }}
+            </label>
+            <input id="cin" type="text" formControlName="cin"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+                   [placeholder]="'clientComponent.form.input.cin' | translate" />
+            <div *ngIf="clientForm.get('clientInformation.cin')?.invalid && (clientForm.get('clientInformation.cin')?.dirty || clientForm.get('clientInformation.cin')?.touched)"
+                 class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.cin' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="mb-8">
+            <label for="password" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.password' | translate }}
+            </label>
+            <input id="password" type="password" formControlName="password"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+                   [placeholder]="'clientComponent.form.input.password' | translate" />
+            <div *ngIf="clientForm.get('clientInformation.password')?.invalid && (clientForm.get('clientInformation.password')?.dirty || clientForm.get('clientInformation.password')?.touched)"
+                 class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.password' | translate }}
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <label for="confirmationPassword" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.confirmationPassword' | translate }}
+            </label>
+            <input id="confirmationPassword" type="password" formControlName="confirmationPassword"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+                   [placeholder]="'clientComponent.form.input.confirmationPassword' | translate" />
+            <div *ngIf="clientForm.get('clientInformation.confirmationPassword')?.invalid && (clientForm.get('clientInformation.confirmationPassword')?.dirty || clientForm.get('clientInformation.confirmationPassword')?.touched)"
+                 class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.confirmationPassword' | translate }}
+            </div>
+            <div *ngIf="clientForm.get('clientInformation.confirmationPassword')?.dirty && clientForm.get('clientInformation.confirmationPassword')?.value !== clientForm.get('clientInformation.password')?.value"
+                 class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.passwordMismatch' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 flex items-center justify-start gap-x-5">
+          <button (click)="setStep(2)"
+                  class="py-3 px-5 text-white bg-customBlue rounded-2xl">
+            {{ 'clientComponent.form.button.next' | translate }}
+          </button>
+          <button type="button"
+                  class="py-3 px-5 text-white bg-red-500 rounded-2xl"
+                  (click)="onCancel()">
+            {{ 'clientComponent.form.button.cancel' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div *ngIf="currentStep === 2">
+      <div formGroupName="passport">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="mb-8">
+            <label for="passportNumber" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.passportNumber' | translate }}
+            </label>
+            <input id="passportNumber" type="text" formControlName="passportNumber"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none"
+                   [placeholder]="'clientComponent.form.input.passportNumber' | translate" />
+            <div *ngIf="clientForm.get('passport.passportNumber')?.invalid && (clientForm.get('passport.passportNumber')?.dirty || clientForm.get('passport.passportNumber')?.touched)"
+                 class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.passportNumber' | translate }}
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <label for="issueDate" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.issueDate' | translate }}
+            </label>
+            <input id="issueDate" type="date" formControlName="issueDate"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+            <div *ngIf="clientForm.get('passport.issueDate')?.invalid && (clientForm.get('passport.issueDate')?.dirty || clientForm.get('passport.issueDate')?.touched)"
+                 class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.issueDate' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="mb-8">
+            <label for="expiryDate" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.expiryDate' | translate }}
+            </label>
+            <input id="expiryDate" type="date" formControlName="expiryDate"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+            <div *ngIf="clientForm.get('passport.expiryDate')?.invalid && (clientForm.get('passport.expiryDate')?.dirty || clientForm.get('passport.expiryDate')?.touched)"
+                 class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.expiryDate' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="mb-8">
+            <label for="imageFile" class="block text-sm font-medium text-gray-700 mb-2">
+              {{ 'clientComponent.form.input.profileImage' | translate }}
+            </label>
+
+            <!-- Flex container to align the input and button in the same line -->
+            <div class="flex items-center space-x-4">
+              <input id="imageFile" type="file" (change)="onFileSelected($event)"
+                     [placeholder]="'clientComponent.form.input.profileImage' | translate"
+                     class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+              <button type="button"
+                      (click)="removeImage()"
+                      class="bg-red-500 text-white p-2 rounded-2xl px-3 hover:bg-red-600">
+                {{ 'clientComponent.form.button.remove' | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+        <div *ngIf="selectedImageUrl" class="mt-4">
+          <img [src]="selectedImageUrl" alt="Selected Image" class="w-full max-w-xs rounded-lg border border-gray-300" />
+        </div>
+
+        <div class="mt-8 flex items-center justify-start gap-x-5">
+          <button type="button" (click)="setStep(1)"
+                  class="py-3 px-5 text-white bg-customBlueSideBar rounded-2xl">
+            {{ 'clientComponent.form.button.back' | translate }}
+          </button>
+          <button
+                  class="py-3 px-5 text-white bg-customBlue rounded-2xl">
+            {{ 'clientComponent.form.button.add' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+

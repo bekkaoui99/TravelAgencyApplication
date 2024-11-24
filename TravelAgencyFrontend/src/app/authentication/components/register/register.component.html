@@ -1,0 +1,114 @@
+<p-toast></p-toast>
+<div class="w-full">
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-[#F2F7FC]">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 class="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-[#0F487C]">Sign up</h2>
+    </div>
+
+    <div class="mt-2 sm:mx-auto sm:w-full sm:max-w-lg p-10 shadow-xl bg-white rounded-xl">
+        <form class="space-y-6" [formGroup]="registerForm"  (ngSubmit)="singUp()">
+
+            <!-- Alert Box -->
+            <div
+                    *ngIf="alertVisible"
+                    class="bg-red-600 border border-white-400 text-white px-4 py-3 rounded relative"
+                    role="alert"
+            >
+                <strong class="font-bold mr-1">{{alertMessage?.state}} :</strong>
+                <span class="block sm:inline">{{alertMessage?.message}}</span>
+                <span class="absolute top-0 bottom-0 right-0 px-4 py-3" (click)="alertVisible = false">
+                <svg
+                        class="fill-current h-6 w-6 text-white"
+                        role="button"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                >
+                  <title>Close</title>
+                  <path
+                          d="M14.348 14.849a1 1 0 01-1.414 0L10 11.414l-2.934 2.935a1 1 0 01-1.414-1.415l2.934-2.934-2.935-2.934a1 1 0 011.415-1.414L10 8.586l2.934-2.935a1 1 0 011.414 1.415L11.414 10l2.934 2.934a1 1 0 010 1.415z"
+                  />
+                </svg>
+              </span>
+            </div>
+
+
+            <div>
+                <label for="firstName" class="block text-sm font-medium leading-6 text-gray-900">First Name</label>
+                <div class="mt-2">
+                    <input id="firstName"  formControlName="firstName"  type="text" autocomplete="firstName" required class="block w-full rounded-md border-0 py-1.5 p-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                </div>
+                <span *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched " class="text-danger">Please enter your First Name</span>
+            </div>
+
+            <div>
+                <label for="lastName" class="block text-sm font-medium leading-6 text-gray-900">Last Name</label>
+                <div class="mt-2">
+                    <input id="lastName" formControlName="lastName" type="text" autocomplete="lastName" required class="block w-full rounded-md border-0 py-1.5 p-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                </div>
+                <span *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched " class="text-danger">Please enter your Last Name</span>
+            </div>
+
+            <div>
+                <label for="userName" class="block text-sm font-medium leading-6 text-gray-900">User Name</label>
+                <div class="mt-2">
+                    <input id="userName" formControlName="userName" type="text" autocomplete="userName" required class="block w-full rounded-md border-0 py-1.5 p-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                </div>
+                <span *ngIf="registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched " class="text-danger">Please enter your User Name</span>
+            </div>
+
+            <div>
+                <label for="phoneNumber" class="block text-sm font-medium leading-6 text-gray-900">Phone Number</label>
+                <div class="mt-2">
+                    <input id="phoneNumber" formControlName="phoneNumber" type="text" autocomplete="phoneNumber" required class="block w-full rounded-md border-0 py-1.5 p-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                </div>
+                <span *ngIf="registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched " class="text-danger">Please enter your Phone Number</span>
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+                <div class="mt-2">
+                    <input id="email" formControlName="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 p-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                </div>
+                <span *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched " class="text-danger">Please enter your Email</span>
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+                <div class="mt-2">
+                    <input id="password" formControlName="password" type="password" autocomplete="password" required class="block w-full rounded-md border-0 py-1.5 p-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                </div>
+                <span *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched " class="text-danger">Password is required (minimum 8 characters).</span>
+            </div>
+
+            <div>
+                <label for="confirmationPassword" class="block text-sm font-medium leading-6 text-gray-900">Confirmation Password</label>
+                <div class="mt-2">
+                    <input id="confirmationPassword" formControlName="confirmationPassword" type="password" autocomplete="confirmationPassword" required class="block w-full rounded-md border-0 py-1.5 p-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                </div>
+                <span *ngIf="registerForm.get('confirmationPassword')?.invalid && registerForm.get('confirmationPassword')?.touched " class="text-danger">Please confirm your password.</span>
+
+                <span *ngIf="registerForm.get('confirmationPassword')?.valid &&
+                registerForm.get('password')?.valid &&
+                !passwordMatchValidator(registerForm)" class="text-danger">Passwords do not match.</span>
+            </div>
+
+            <div>
+                <!--            [ngClass]="{'opacity-60': registerForm.invalid}"-->
+                <button
+                        [disabled]="registerForm.invalid"
+                        type="submit"
+                        class="flex w-full justify-center  rounded-md bg-[#0F487C] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign Up</button>
+            </div>
+
+        </form>
+
+        <p class="mt-10 text-center text-sm text-gray-500">
+            Already I Have An Account?
+            <a routerLink="/auth/login" class="font-bold leading-6 text-[#0F487C] hover:text-indigo-500">Login</a>
+        </p>
+        <p class="mt-10 text-center text-sm text-gray-500">
+            I changed my mind , I don't wanna SingUp Now
+            <a routerLink="" class="font-bold leading-6 text-[#0F487C] hover:text-indigo-500">Home</a>
+        </p>
+    </div>
+</div>
+</div>

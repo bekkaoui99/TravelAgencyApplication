@@ -1,0 +1,107 @@
+name: Travel Agency Rest Api Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - TravelAgencyRestApi/**
+      - 'docker-compose-backend.yml'
+      - .github/workflows/*-backend.yml
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    name: Compile project
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+      - name: Set execute permission for Maven wrapper
+        run: sudo chmod +x TravelAgencyRestApi/mvnw
+
+      - name: Compile project
+        run: |
+          cd TravelAgencyRestApi
+          ./mvnw clean compile
+          
+
+
+  build-image:
+    name: Build Docker image
+    runs-on: ubuntu-latest
+    needs: [compile]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+      - name: Set execute permission for Maven wrapper
+        run: sudo chmod +x TravelAgencyRestApi/mvnw
+
+
+      - name: Extract project version
+        id: extract_version
+        run: |
+          cd TravelAgencyRestApi
+          echo "VERSION=$(./mvnw -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_OUTPUT
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build & Push to DockerHub
+        uses: docker/build-push-action@v5
+        with:
+          context: TravelAgencyRestApi
+          file: TravelAgencyRestApi/Dockerfile
+          push: true
+          platforms: linux/amd64
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/travel-agency-restapi:${{ steps.extract_version.outputs.VERSION }},${{ secrets.DOCKERHUB_USERNAME }}/travel-agency-restapi:latest
+
+
+  deploy:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+    needs: [build-image]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      - name: Create deployment folder
+        run: sshpass -p "${{ secrets.VPS_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} "mkdir -p /home/TravelAgencyApplication/ci-cd/Production/REST_API"
+
+      - name: Copy docker-compose backend file
+        run: sshpass -p "${{ secrets.VPS_PASSWORD }}" scp -o StrictHostKeyChecking=no docker-compose-backend.yml ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:/home/TravelAgencyApplication/ci-cd/Production/REST_API/docker-compose.yml
+
+      - name: Copy env file
+        run: sshpass -p "${{ secrets.VPS_PASSWORD }}" scp -o StrictHostKeyChecking=no .env ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:/home/TravelAgencyApplication/ci-cd/Production/REST_API/.env
+
+      - name: Deploy
+        run: |
+          sshpass -p "${{ secrets.VPS_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOF
+          cd /home/TravelAgencyApplication/ci-cd/Production/REST_API
+          docker compose down
+          docker compose -f docker-compose.yml pull -q
+          docker compose -f docker-compose.yml up -d
+          EOF

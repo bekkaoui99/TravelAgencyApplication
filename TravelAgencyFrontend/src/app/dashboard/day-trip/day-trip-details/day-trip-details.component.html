@@ -1,0 +1,133 @@
+<div *ngIf="dayTrip">
+  <div class="activity-details-container mx-auto max-w-6xl p-6 bg-white shadow-lg rounded-lg">
+    <!-- DayTrip Title -->
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">{{ dayTrip.title }}</h2>
+
+    <!-- Images Section for DayTrip -->
+    <div class="flex">
+      <!-- Main Image Container (70%) -->
+      <div class="main-image-container w-[70%] pr-4">
+        <!-- Main Image -->
+        <img
+          [src]="selectedImage"
+          alt="Main Activity Image"
+          class="w-full h-[450px] object-cover rounded-lg shadow-md"
+        />
+      </div>
+
+      <!-- Thumbnail Container (30%) -->
+      <div class="thumbnail-container w-[30%] overflow-auto">
+        <div class="flex flex-wrap gap-2">
+          <div
+            *ngFor="let imageUrl of dayTrip.imagesUrl; let i = index"
+            class="thumbnail cursor-pointer overflow-hidden rounded-lg shadow-md"
+            (click)="onSelectImage(imageUrl)"
+          >
+            <img
+              [src]="imageUrl"
+              alt="Thumbnail"
+              class="w-full h-[150px] object-cover rounded-lg"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DayTrip Information -->
+    <div class="mb-4 mt-5 p-4 bg-gray-100 rounded-lg">
+      <h3 class="text-2xl font-semibold mb-2 text-gray-800">DayTrip Information</h3>
+      <!-- Destination -->
+      <p class="text-xl text-gray-600 mb-2">
+        <strong>Destination:</strong> {{ dayTrip.destination }}
+      </p>
+
+      <!-- Short Description -->
+      <p class="text-xl text-gray-600 mb-4">
+        <strong>Short Description:</strong> {{ dayTrip.shortDescription }}
+      </p>
+
+      <!-- Long Description -->
+      <p class="text-xl text-gray-600 mb-4">
+        <strong>Long Description:</strong> {{ dayTrip.longDescription }}
+      </p>
+
+      <!-- Activity Type -->
+      <p class="text-xl text-gray-600 mb-2">
+        <strong>Status:</strong> {{ dayTrip.status }}
+      </p>
+
+      <!-- Activity Cost Type -->
+      <p class="text-xl text-gray-600 mb-2">
+        <strong>Date:</strong> {{ dayTrip.dayTripDate }}
+      </p>
+    </div>
+
+    <!-- DayTrip Guide Information -->
+    <div class="mb-4 mt-2 p-4 bg-gray-100 rounded-lg">
+      <h3 class="text-2xl font-semibold mb-2 text-gray-800">Guide Information</h3>
+      <p class="text-xl text-gray-700 my-3">
+        <strong>Name:</strong> {{ dayTrip.guide.firstName }} {{ dayTrip.guide.lastName }}
+      </p>
+      <p class="text-xl text-gray-700 my-3">
+        <strong>Email:</strong> {{ dayTrip.guide.email }}
+      </p>
+      <p class="text-xl text-gray-700 my-3">
+        <strong>Phone:</strong> {{ dayTrip.guide.phone }}
+      </p>
+    </div>
+
+    <!-- DayTrip Activities Information -->
+    <div class="mt-6">
+      <h3 class="text-2xl font-semibold mb-4 text-gray-800">Activities</h3>
+
+      <!-- Activity Dropdown Sections -->
+      <div *ngFor="let activity of dayTrip.activities; let i = index">
+        <!-- Activity Dropdown Header -->
+        <div class="flex justify-between items-center p-4 bg-gray-200 rounded-lg cursor-pointer" (click)="toggleActivity(i)">
+          <h4 class="text-xl font-bold text-gray-800">{{ activity.title }}</h4>
+          <i class="pi pi-chevron-down" [ngClass]="{'pi-chevron-up': activityExpanded[i]}"></i>
+        </div>
+
+        <!-- Activity Details Section (Expanded) -->
+        <div *ngIf="activityExpanded[i]" class="mt-2 p-4 bg-gray-50 rounded-lg shadow-inner">
+          <!-- Images Slider -->
+          <div class="flex">
+            <div class="main-image-container w-[70%] pr-4">
+              <img [src]="selectedActivityImage[i]" alt="Activity Image" class="w-full h-[350px] object-cover rounded-lg shadow-md" />
+            </div>
+            <div class="thumbnail-container w-[30%] overflow-auto">
+              <div class="flex flex-wrap gap-2">
+                <div
+                  *ngFor="let imageUrl of activity.imagesUrl; let j = index"
+                  class="thumbnail cursor-pointer overflow-hidden rounded-lg shadow-md"
+                  (click)="onSelectActivityImage(i, imageUrl)"
+                >
+                  <img [src]="imageUrl" alt="Thumbnail" class="w-full h-[100px] object-cover rounded-lg" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity Details -->
+          <div class="mt-4">
+            <p class="text-xl text-gray-600">
+              <strong>Destination:</strong> {{ activity.destination }}
+            </p>
+            <p class="text-xl text-gray-600">
+              <strong>Short Description:</strong> {{ activity.shortDescription }}
+            </p>
+            <p class="text-xl text-gray-600">
+              <strong>Long Description:</strong> {{ activity.longDescription }}
+            </p>
+            <p class="text-xl text-gray-600">
+              <strong>Start Time:</strong> {{ activity.startAt }}
+            </p>
+            <p class="text-xl text-gray-600">
+              <strong>End Time:</strong> {{ activity.endAt }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

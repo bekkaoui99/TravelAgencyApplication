@@ -1,0 +1,291 @@
+<div class="w-full h-full bg-gray-100 p-10">
+
+  <div class="flex items-center justify-center mb-5">
+    <a routerLink='add' class="flex items-center justify-center gap-x-1 rounded-2xl bg-customBlue text-white py-3 px-3">
+      <img src="./assets/icons/plus.png" alt="Add" class="h-5 w-5">
+      <span class="text-white">&nbsp;</span>
+      {{ 'guideComponent.addGuide' | translate }}
+    </a>
+  </div>
+
+  <div class="shadow-xl bg-white p-5 rounded-xl">
+
+    <div class="flex justify-between items-center mb-5">
+      <div>
+        <h1 class="font-bold text-black text-xl">
+          {{ 'guideComponent.guideList' | translate }}
+        </h1>
+      </div>
+      <div class="flex gap-3 mx-3">
+        <div>
+          <button
+            type="button"
+            class="btn text-white px-3 py-2 rounded-lg shadow-xl border border-gray-300 "
+            [ngClass]="{'text-white bg-lime-700': displayType === 'list' }"
+            (click)="displayType = 'list'"
+          >
+            <i class="pi pi-bars"></i>
+          </button>
+        </div>
+        <div>
+          <button
+            type="button"
+            class="btn text-white px-3 py-2 rounded-lg shadow-xl border border-gray-300"
+            [ngClass]="{'text-white bg-lime-700': displayType === 'grid' }"
+            (click)="displayType = 'grid'"
+          >
+            <i class="pi pi-th-large"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="datatable" *ngIf="displayType === 'list'">
+      <ng-datatable
+        [rows]="rows"
+        [columns]="guideTableCols"
+        [columnFilter]="true"
+        skin="whitespace-nowrap table-hover"
+        [hasCheckbox]="true"
+        sortColumn="name"
+        (rowSelect)="onRowSelect($event)"
+        [search]="search"
+        firstArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M13 19L7 12L13 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M16.9998 19L10.9998 12L16.9998 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+        lastArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M11 19L17 12L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M6.99976 19L12.9998 12L6.99976 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+        previousArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M15 5L9 12L15 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+        nextArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+      >
+        <ng-template slot="dob" let-value="data"> {{ formatDate(value.dob) }} </ng-template>
+        <ng-template slot="actions" let-row="data">
+          <div class="flex items-center justify-between gap-x-4">
+            <button type="button" class="text-customBlue" (click)="updateGuide(row)">
+              <i class="pi pi-pencil"></i>
+            </button>
+            <button type="button" class="text-red-500" (click)="removeGuide(row)">
+              <i class="pi pi-trash"></i>
+            </button>
+          </div>
+        </ng-template>
+      </ng-datatable>
+    </div>
+
+
+
+    <ng-container *ngIf="displayType === 'grid'">
+      <div class="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3">
+        <ng-container *ngFor="let guide of rows">
+          <div class="bg-gray-100 py-3 shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105">
+            <div class="flex justify-center items-center">
+              <img [src]="guide.imageUrl" alt="{{guide.firstName}}" class="w-1/2 rounded-full object-cover" />
+            </div>
+            <div class="p-4">
+              <h2 class="text-xl font-semibold mb-5 text-center">{{guide.firstName}} {{guide.lastName}}</h2>
+              <h2 class="text-xl font-semibold mb-2">
+                <i class="pi pi-phone mr-2"></i>
+                {{guide.phone}}
+              </h2>
+              <p class="text-gray-800">
+                <i class="pi pi-map-marker mr-2"></i>
+                {{guide.country}}
+              </p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+    </ng-container>
+  </div>
+
+
+  <p-dialog header="Update Guide" [(visible)]="displayDialog" [modal]="true" [style]="{width: '600px'}">
+    <ng-template pTemplate="header">
+       {{ 'guideComponent.updateGuide' | translate }}
+    </ng-template>
+    <ng-template pTemplate="content">
+      <form [formGroup]="updateForm" (ngSubmit)="onSave()" class="text-sm space-y-6">
+
+        <div *ngIf="selectedImageUrl" class="mt-4 flex justify-center">
+          <img [src]="selectedImageUrl" alt="Selected Image" class="w-32 h-32 rounded-full border border-gray-300" />
+        </div>
+
+        <div class="mb-5">
+          <label for="firstName" class="block text-gray-700 font-medium mb-2">
+            {{ 'guideComponent.form.input.firstName' | translate }}
+          </label>
+          <input
+            id="firstName"
+            type="text"
+            placeholder="{{ 'guideComponent.form.input.firstName' | translate }}"
+            class="form-input block w-full py-3 px-5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            formControlName="firstName"
+          />
+          <div *ngIf="updateForm.get('firstName')?.invalid && updateForm.get('firstName')?.touched"
+               class="text-red-600 text-sm">
+            {{ 'guideComponent.form.inputValidation.firstName' | translate }}
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <label for="lastName" class="block text-gray-700 font-medium mb-2">
+            {{ 'guideComponent.form.input.lastName' | translate }}
+          </label>
+          <input
+            id="lastName"
+            type="text"
+            placeholder="{{ 'guideComponent.form.input.lastName' | translate }}"
+            class="form-input block w-full py-3 px-5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            formControlName="lastName"
+          />
+          <div *ngIf="updateForm.get('lastName')?.invalid && updateForm.get('lastName')?.touched" class="text-red-600 text-sm">
+            {{ 'guideComponent.form.inputValidation.lastName' | translate }}
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <label for="phone" class="block text-gray-700 font-medium mb-2">
+            {{ 'guideComponent.form.input.phone' | translate }}
+          </label>
+          <input
+            id="phone"
+            type="text"
+            placeholder="{{ 'guideComponent.form.input.phone' | translate }}"
+            class="form-input block w-full py-3 px-5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            formControlName="phone"
+          />
+          <div *ngIf="updateForm.get('phone')?.invalid && updateForm.get('phone')?.touched" class="text-red-600 text-sm">
+            {{ 'guideComponent.form.inputValidation.phone' | translate }}
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <label for="country" class="block text-gray-700 font-medium mb-2">
+            {{ 'guideComponent.form.input.country' | translate }}
+          </label>
+          <input
+            id="country"
+            type="text"
+            placeholder="{{ 'guideComponent.form.input.country' | translate }}"
+            class="form-input block w-full py-3 px-5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            formControlName="country"
+          />
+          <div *ngIf="updateForm.get('country')?.invalid && updateForm.get('country')?.touched" class="text-red-600 text-sm">
+            {{ 'guideComponent.form.inputValidation.country' | translate }}
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <label for="cin" class="block text-gray-700 font-medium mb-2">
+            {{ 'guideComponent.form.input.cin' | translate }}
+          </label>
+          <input
+            id="cin"
+            type="text"
+            placeholder="{{ 'guideComponent.form.input.cin' | translate }}"
+            class="form-input block w-full py-3 px-5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            formControlName="cin"
+          />
+          <div *ngIf="updateForm.get('cin')?.invalid && updateForm.get('cin')?.touched" class="text-red-600 text-sm">
+            {{ 'guideComponent.form.inputValidation.cin' | translate }}
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <label for="email" class="block text-gray-700 font-medium mb-2">
+            {{ 'guideComponent.form.input.email' | translate }}
+          </label>
+          <input
+            id="email"
+            type="email"
+            placeholder="{{ 'guideComponent.form.input.email' | translate }}"
+            class="form-input block w-full py-3 px-5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            formControlName="email"
+          />
+          <div *ngIf="updateForm.get('email')?.invalid && updateForm.get('email')?.touched" class="text-red-600 text-sm">
+            {{ 'guideComponent.form.inputValidation.email' | translate }}
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <button type="button" class="text-blue-500" (click)="onChangePasswordClick()">
+            {{ showPasswordFields ? 'Cancel Password Change' : 'Change Password' }}
+          </button>
+        </div>
+
+        <div class="mb-5" *ngIf="showPasswordFields">
+          <label for="password" class="block text-gray-700 font-medium mb-2">
+            {{ 'guideComponent.form.input.password' | translate }}
+          </label>
+          <input
+            id="password"
+            type="password"
+            placeholder="{{ 'guideComponent.form.input.password' | translate }}"
+            class="form-input block w-full py-3 px-5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            formControlName="password"
+          />
+          <div *ngIf="updateForm.get('password')?.invalid && updateForm.get('password')?.touched" class="text-red-600 text-sm">
+            {{ 'guideComponent.form.inputValidation.password' | translate }}
+          </div>
+        </div>
+
+        <div class="mb-5" *ngIf="showPasswordFields">
+          <label for="confirmationPassword" class="block text-gray-700 font-medium mb-2">
+            {{ 'guideComponent.form.input.confirmationPassword' | translate }}
+          </label>
+          <input
+            id="confirmationPassword"
+            type="password"
+            placeholder="{{ 'guideComponent.form.input.confirmationPassword' | translate }}"
+            class="form-input block w-full py-3 px-5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            formControlName="confirmationPassword"
+          />
+          <div *ngIf="updateForm.controls['confirmationPassword'].invalid && (updateForm.controls['confirmationPassword'].dirty || updateForm.controls['confirmationPassword'].touched)"
+               class="text-red-600 text-sm">
+            {{ 'guideComponent.form.inputValidation.confirmationPassword' | translate }}
+          </div>
+          <div *ngIf="updateForm.controls['confirmationPassword'].dirty && updateForm.controls['confirmationPassword'].value !== updateForm.controls['password'].value"
+               class="text-red-600 text-sm">
+            {{ 'guideComponent.form.inputValidation.passwordMismatch' | translate }}
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <label for="imageFile" class="block text-gray-700 font-medium mb-2">
+            {{ 'guideComponent.form.input.profileImage' | translate }}
+          </label>
+          <input
+            id="imageFile"
+            type="file"
+            (change)="onFileSelected($event)"
+            class="form-input block w-full py-3 px-5 border border-gray-300 rounded-xl focus:outline-none"
+          />
+        </div>
+        <div class="mt-8 flex items-center justify-end space-x-4">
+          <button
+            type="button"
+            class="btn btn-outline-danger text-red-500 border border-red-500 px-4 py-3 rounded-xl hover:bg-red-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+            (click)="onCancel()"
+          >
+            {{ 'guideComponent.form.button.cancel' | translate }}
+          </button>
+          <button
+            type="submit"
+            [disabled]="!updateForm.valid"
+            class="btn btn-primary bg-blue-500 text-white px-4 py-3 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            {{ 'guideComponent.form.button.update' | translate }}
+          </button>
+        </div>
+
+      </form>
+    </ng-template>
+  </p-dialog>
+
+
+
+
+</div>
+
+
+

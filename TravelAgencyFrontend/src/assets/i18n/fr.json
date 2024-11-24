@@ -1,0 +1,290 @@
+{
+  "app": {
+    "title": "SIYAHA"
+  },
+  "menu": {
+    "dashboard": "Tableau de bord",
+    "content": "Contenu",
+    "reservation": "Réservation",
+    "travel": "Voyage",
+    "dayTrips": "Journeés",
+    "activities": "Activités",
+    "hotels": "Hôtels",
+    "users": "Utilisateurs",
+    "client": "Client",
+    "guide": "Guide",
+    "statistics": "Statistiques",
+    "create_new_travel": "Créer un nouveau voyage",
+    "create_new_day_trip": "Créer une nouvelle excursion",
+    "create_new_activity": "Créer une nouvelle activité",
+    "create_new_client": "Créer un nouveau client",
+    "create_new_guide": "Créer un nouveau guide",
+    "create_new_hotel": "Créer un nouvel hôtel",
+    "add_companion": "Ajouter un compagnon",
+    "add_reservation": "Ajouter une réservation"
+  },
+
+  "hotelComponent": {
+    "addHotel": "Ajouter un Hôtel",
+    "hotelList": "Liste des Hôtels",
+    "updateHotel": "Mettre à jour Hôtel",
+    "table": {
+      "columns": {
+        "name": "Nom",
+        "rate": "Évaluation",
+        "city": "Ville",
+        "country": "Pays",
+        "actions": "Action"
+      }
+    },
+    "form": {
+      "input": {
+        "name": "Nom de l'Hôtel",
+        "rate": "Évaluation",
+        "city": "Ville",
+        "country": "Pays"
+      },
+      "button": {
+        "next": "Suivant",
+        "back": "Retour",
+        "cancel": "Annuler",
+        "clone": "Dupliquer",
+        "update": "Mettre à jour",
+        "add": "Ajouter un Client",
+        "remove": "Supprimer"
+      },
+      "inputValidation": {
+        "nameRequired": "Le nom de l'hôtel est requis",
+        "rateRequired": "L'évaluation est requise",
+        "cityRequired": "La ville est requise",
+        "countryRequired": "Le pays est requis"
+      }
+    }
+  },
+  "clientComponent": {
+    "clientList": "Liste des clients",
+    "updateClient": "Mettre à jour client",
+    "addClient": "Ajouter un client",
+    "table": {
+      "columns": {
+        "firstName": "Prénom",
+        "lastName": "Nom de famille",
+        "cin": "CIN",
+        "country": "Pays",
+        "actions": "Action"
+      }
+    },
+    "form": {
+      "clientSection": "Informations du client",
+      "passportSection": "Passeport",
+      "input": {
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "phone": "Téléphone",
+        "country": "Pays",
+        "email": "Email",
+        "cin": "CIN",
+        "password": "Mot de passe",
+        "confirmationPassword": "Confirmation du mot de passe",
+        "passportNumber": "Numéro de passeport",
+        "issueDate": "Date d'émission",
+        "expiryDate": "Date d'expiration",
+        "profileImage": "Image de profil"
+      },
+      "button": {
+        "next": "Suivant",
+        "back": "Retour",
+        "cancel": "Annuler",
+        "clone": "Clone",
+        "update": "Mettre à jour ",
+        "add": "Ajouter un client",
+        "remove": "Supprimer"
+
+      },
+      "inputValidation": {
+        "firstName": "Le prénom est requis et doit comporter au moins 3 caractères.",
+        "lastName": "Le nom est requis et doit comporter au moins 2 caractères.",
+        "phone": "Le numéro de téléphone est requis et doit comporter 10 chiffres.",
+        "country": "Le pays est requis.",
+        "email": "Un email valide est requis.",
+        "cin": "Un CIN valide est requis.",
+        "password": "Le mot de passe est requis et doit comporter au moins 8 caractères.",
+        "confirmationPassword": "La confirmation du mot de passe est requise et doit comporter au moins 8 caractères.",
+        "passwordMismatch": "Le mot de passe et la confirmation ne correspondent pas.",
+        "passportNumber": "Le numéro de passeport est requis.",
+        "issueDate": "La date d'émission est requise.",
+        "expiryDate": "La date d'expiration est requise."
+      }
+    }
+  },
+  "guideComponent": {
+    "updateGuide": "Mettre à jour le guide",
+    "guideList": "Liste des guides",
+    "addGuide": "Ajouter un guide",
+    "table": {
+      "columns": {
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "cin": "CIN",
+        "country": "Pays",
+        "actions": "Actions"
+      }
+    },
+    "form": {
+      "input": {
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "phone": "Téléphone",
+        "country": "Pays",
+        "email": "Email",
+        "cin": "CIN",
+        "password": "Mot de passe",
+        "confirmationPassword": "Confirmation du mot de passe",
+        "profileImage": "Image de profil"
+      },
+      "button": {
+        "next": "Suivant",
+        "back": "Précédent",
+        "cancel": "Annuler",
+        "clone": "Cloner",
+        "update": "Mettre à jour",
+        "add": "Ajouter un client",
+        "remove": "Supprimer"
+      },
+      "inputValidation": {
+        "firstName": "Le prénom est requis et doit contenir au moins 3 caractères.",
+        "lastName": "Le nom est requis et doit contenir au moins 2 caractères.",
+        "phone": "Le numéro de téléphone est requis et doit contenir 10 chiffres.",
+        "country": "Le pays est requis.",
+        "email": "Un email valide est requis.",
+        "cin": "Un CIN valide est requis.",
+        "password": "Le mot de passe est requis et doit contenir au moins 8 caractères.",
+        "confirmationPassword": "La confirmation du mot de passe est requise et doit contenir au moins 8 caractères.",
+        "passwordMismatch": "Le mot de passe et la confirmation du mot de passe ne correspondent pas."
+      }
+    }
+  },
+  "activityComponent": {
+    "addActivity": "Ajouter une activité",
+    "updateActivity": "Mettre à jour l'activité",
+    "activityList": "Liste des activités",
+    "table": {
+      "columns": {
+        "title": "Titre",
+        "destination": "Destination",
+        "activityType": "Type d'activité",
+        "activityCostType": "Type de coût d'activité",
+        "guide": "Guide",
+        "actions": "Action"
+      }
+    },
+    "form": {
+      "input": {
+        "title": "Titre",
+        "destination": "Destination",
+        "activityType": "Type d'activité",
+        "activityCostType": "Type de coût d'activité",
+        "activityGuideId": "Guide d'activité",
+        "activityAdditionalPrice": "Prix supplémentaire",
+        "shortDescription": "Description courte",
+        "longDescription": "Description longue",
+        "image": "Image"
+      },
+      "button": {
+        "add": "Ajouter une activité",
+        "cancel": "Annuler",
+        "update": "Mettre à jour ",
+        "removeImage": "Supprimer",
+        "addImage": "Ajouter une image",
+        "clone": "Clone"
+      },
+      "inputValidation": {
+        "title": "Le titre est obligatoire.",
+        "destination": "La destination est obligatoire.",
+        "activityType": "Le type d'activité est obligatoire.",
+        "activityCostType": "Le type de coût d'activité est obligatoire.",
+        "activityGuide": "Le guide d'activité est obligatoire.",
+        "additionalPrice": "Le prix supplémentaire est obligatoire lorsque le type de coût est EXTRA_COST.",
+        "shortDescription": "La description courte est obligatoire.",
+        "longDescription": "La description longue est obligatoire."
+      }
+    }
+
+  },
+  "dayTripComponent": {
+    "updateDayTrip": "Mettre à jour la journée",
+    "dayTripList": "Liste des journées",
+    "addDayTrip": "Ajouter une journée",
+    "table": {
+      "columns": {
+        "title": "Titre",
+        "destination": "Destination",
+        "status": "Statut",
+        "activities": "Activités",
+        "actions": "Actions"
+      }
+    },
+    "form": {
+      "input": {
+        "title": "Titre",
+        "destination": "Destination",
+        "status": "Statut",
+        "shortDescription": "Description courte",
+        "longDescription": "Description longue",
+        "activityGuideId": "Guide d'activités",
+        "startTime": "Heure de Début",
+        "endTime": "Heure de Fin",
+        "images": "Images"
+      },
+      "button": {
+        "next": "Suivant",
+        "back": "Retour",
+        "cancel": "Annuler",
+        "add": "Ajouter une journée",
+        "update": "Mettre à jour journée",
+        "addImage": "Ajouter un photo",
+        "remove": "Supprimer l'image",
+        "addActivity": "Ajouter une activité",
+        "removeActivity": "Supprimer l'activité"
+      },
+      "inputValidation": {
+        "title": "Le titre est requis.",
+        "destination": "La destination est requise.",
+        "status": "Le statut est requis.",
+        "shortDescription": "La description courte est requise et doit contenir au moins 10 caractères.",
+        "longDescription": "La description longue est requise et doit contenir au moins 20 caractères.",
+        "activityGuideId": "Veuillez sélectionner un guide d'activités.",
+        "imageFormat": "Format d'image invalide. Veuillez télécharger une image valide.",
+        "startAt": "Veuillez sélectionner une heure de début.",
+        "endAt": "Veuillez sélectionner une heure de fin."
+      }
+    }
+  },
+  "travelComponent": {
+    "add_travel": "Ajouter Voyage",
+    "travel_list": "Liste des Voyages",
+    "update_travel": "Mettre à jour Voyage",
+    "form_cancel": "Annuler",
+    "form_update": "Mettre à jour",
+    "form_clone": "Cloner"
+  },
+  "companionComponent": {
+    "add_companion": "Ajouter Accompagnateur",
+    "companion_list": "Liste des Accompagnateurs",
+    "update_companion": "Mettre à jour Accompagnateur",
+    "form_cancel": "Annuler",
+    "form_update": "Mettre à jour",
+    "form_clone": "Cloner"
+  },
+  "reservationComponent": {
+    "add_reservation": "Ajouter Réservation",
+    "reservation_list": "Liste des Réservations",
+    "update_reservation": "Mettre à jour Réservation",
+    "form_cancel": "Annuler",
+    "form_update": "Mettre à jour",
+    "form_clone": "Cloner"
+  }
+
+
+
+}

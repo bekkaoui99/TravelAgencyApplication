@@ -1,0 +1,305 @@
+<div class="w-full h-full bg-gray-100 p-10">
+
+  <div class="flex items-center justify-center mb-5">
+    <a routerLink='add' class="flex items-center justify-center gap-x-1 rounded-2xl bg-customBlue text-white py-3 px-3">
+      <img src="./assets/icons/plus.png" alt="Add" class="h-5 w-5">
+      <span class="text-white">&nbsp;</span>
+       {{'clientComponent.addClient' | translate}}
+    </a>
+  </div>
+
+  <div class="shadow-xl bg-white p-5 rounded-xl">
+
+    <div class="flex justify-between items-center mb-5">
+      <div><h1 class="font-bold text-black text-xl">{{'clientComponent.clientList' | translate}}</h1></div>
+      <div class="flex gap-3 mx-3">
+        <div>
+          <button
+            type="button"
+            class="btn text-white px-3 py-2 rounded-lg shadow-xl border border-gray-300 "
+            [ngClass]="{'text-white bg-lime-700': displayType === 'list' }"
+            (click)="displayType = 'list'"
+          >
+            <i class="pi pi-bars"></i>
+          </button>
+        </div>
+        <div>
+          <button
+            type="button"
+            class="btn text-white px-3 py-2 rounded-lg shadow-xl border border-gray-300"
+            [ngClass]="{'text-white bg-lime-700': displayType === 'grid' }"
+            (click)="displayType = 'grid'"
+          >
+            <i class="pi pi-th-large"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="datatable" *ngIf="displayType === 'list'">
+      <ng-datatable
+        [rows]="rows"
+        [columns]="clientCols"
+        [columnFilter]="true"
+        skin="whitespace-nowrap table-hover"
+        [hasCheckbox]="true"
+        sortColumn="name"
+        (rowSelect)="onRowSelect($event)"
+        [search]="search"
+        firstArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M13 19L7 12L13 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M16.9998 19L10.9998 12L16.9998 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+        lastArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M11 19L17 12L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M6.99976 19L12.9998 12L6.99976 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+        previousArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M15 5L9 12L15 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+        nextArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+      >
+        <ng-template slot="dob" let-value="data"> {{ formatDate(value.dob) }} </ng-template>
+        <ng-template slot="actions" let-row="data">
+          <div class="flex items-center justify-between gap-x-4">
+            <button type="button" class="text-customBlue" (click)="updateClient(row)">
+              <i class="pi pi-pencil"></i>
+            </button>
+            <button type="button" class="text-red-500" (click)="removeClient(row)">
+              <i class="pi pi-trash"></i>
+            </button>
+          </div>
+        </ng-template>
+      </ng-datatable>
+    </div>
+
+
+
+    <ng-container *ngIf="displayType === 'grid'">
+      <div class="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3">
+        <ng-container *ngFor="let client of rows">
+          <div class="bg-gray-100 py-3 shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105">
+            <div class="flex justify-center items-center">
+              <img [src]="client.imageUrl" alt="{{client.firstName}}" class="w-1/2 rounded-full object-cover" />
+            </div>
+            <div class="p-4">
+              <h2 class="text-xl font-semibold mb-5 text-center">{{client.firstName}} {{client.lastName}}</h2>
+              <h2 class="text-xl font-semibold mb-2">
+                <i class="pi pi-phone mr-2"></i>
+                {{client.phone}}
+              </h2>
+              <p class="text-gray-800">
+                <i class="pi pi-map-marker mr-2"></i>
+                {{client.country}}
+              </p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+    </ng-container>
+  </div>
+
+
+
+  <p-dialog header="Update Client" [(visible)]="displayDialog" [modal]="true" [style]="{width: '800px'}">
+    <ng-template pTemplate="header">
+      {{'clientComponent.updateClient' | translate}}
+    </ng-template>
+    <ng-template pTemplate="content">
+      <form [formGroup]="clientForm" (ngSubmit)="onSave()" class="space-y-4">
+
+        <div *ngIf="selectedImageUrl" class="mt-4 flex justify-center">
+          <img [src]="selectedImageUrl" alt="Selected Image" class="w-32 h-32 rounded-full border border-gray-300" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="mb-3">
+            <label for="firstName" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.firstName' | translate }}
+            </label>
+            <input id="firstName" type="text" formControlName="firstName"
+                   [placeholder]="'clientComponent.form.input.firstName' | translate"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" placeholder="Enter First Name" />
+            <div *ngIf="clientForm.controls['firstName'].invalid && (clientForm.controls['firstName'].dirty || clientForm.controls['firstName'].touched)" class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.firstName' | translate }}
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="lastName" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.lastName' | translate }}
+            </label>
+            <input id="lastName" type="text" formControlName="lastName"
+                   [placeholder]="'clientComponent.form.input.lastName' | translate"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" placeholder="Enter Last Name" />
+            <div *ngIf="clientForm.controls['lastName'].invalid && (clientForm.controls['lastName'].dirty || clientForm.controls['lastName'].touched)" class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.lastName' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="mb-3">
+            <label for="phone" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.phone' | translate }}
+            </label>
+            <input id="phone" type="text" formControlName="phone"
+                   [placeholder]="'clientComponent.form.input.phone' | translate"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" placeholder="Enter Phone Number" />
+            <div *ngIf="clientForm.controls['phone'].invalid && (clientForm.controls['phone'].dirty || clientForm.controls['phone'].touched)" class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.phone' | translate }}
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="country" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.country' | translate }}
+            </label>
+            <input id="country" type="text" formControlName="country"
+                   [placeholder]="'clientComponent.form.input.country' | translate"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" placeholder="Enter Country" />
+            <div *ngIf="clientForm.controls['country'].invalid && (clientForm.controls['country'].dirty || clientForm.controls['country'].touched)" class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.country' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="mb-3">
+            <label for="cin" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.cin' | translate }}
+            </label>
+            <input id="cin" type="text" formControlName="cin"
+                   [placeholder]="'clientComponent.form.input.cin' | translate"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" placeholder="Enter CIN" />
+            <div *ngIf="clientForm.controls['cin'].invalid && (clientForm.controls['cin'].dirty || clientForm.controls['cin'].touched)" class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.cin' | translate }}
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.email' | translate }}
+            </label>
+            <input id="email" type="email" formControlName="email"
+                   [placeholder]="'clientComponent.form.input.email' | translate"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" placeholder="Enter Email" />
+            <div *ngIf="clientForm.controls['email'].invalid && (clientForm.controls['email'].dirty || clientForm.controls['email'].touched)" class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.email' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <button type="button" class="text-blue-500" (click)="onChangePasswordClick()">
+            {{ showPasswordFields ? 'Cancel Password Change' : 'Change Password' }}
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" *ngIf="showPasswordFields">
+          <div class="mb-3">
+            <label for="password" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.password' | translate }}
+            </label>
+            <input id="password" type="password" formControlName="password"
+                   [placeholder]="'clientComponent.form.input.password' | translate"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" placeholder="Enter Password" />
+            <div *ngIf="clientForm.controls['password'].invalid && (clientForm.controls['password'].dirty || clientForm.controls['password'].touched)" class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.password' | translate }}
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="confirmationPassword" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.confirmationPassword' | translate }}
+            </label>
+            <input id="confirmationPassword" type="password" formControlName="confirmationPassword"
+                   [placeholder]="'clientComponent.form.input.confirmationPassword' | translate"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" placeholder="Enter Password" />
+            <div *ngIf="clientForm.controls['confirmationPassword'].invalid && (clientForm.controls['confirmationPassword'].dirty || clientForm.controls['confirmationPassword'].touched)" class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.confirmationPassword' | translate }}
+            </div>
+            <div *ngIf="clientForm.controls['confirmationPassword'].dirty && clientForm.controls['confirmationPassword'].value !== clientForm.controls['password'].value" class="text-red-600 text-sm">
+              {{ 'clientComponent.form.inputValidation.passwordMismatch' | translate }}
+            </div>
+          </div>
+        </div>
+
+
+        <div formGroupName="passport">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="mb-8">
+              <label for="passportNumber" class="block text-sm font-medium text-gray-700">
+                {{ 'clientComponent.form.input.passportNumber' | translate }}
+              </label>
+              <input id="passportNumber" type="text" formControlName="passportNumber"
+                     [placeholder]="'clientComponent.form.input.passportNumber' | translate"
+                     class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" placeholder="Enter Passport Number" />
+              <div *ngIf="clientForm.get('passport.passportNumber')?.invalid && (clientForm.get('passport.passportNumber')?.dirty || clientForm.get('passport.passportNumber')?.touched)" class="text-red-600 text-sm">
+                {{ 'clientComponent.form.inputValidation.passportNumber' | translate }}
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <label for="issueDate" class="block text-sm font-medium text-gray-700">
+                {{ 'clientComponent.form.input.issueDate' | translate }}
+              </label>
+              <input id="issueDate" type="date" formControlName="issueDate"
+                     class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+              <div *ngIf="clientForm.get('passport.issueDate')?.invalid && (clientForm.get('passport.issueDate')?.dirty || clientForm.get('passport.issueDate')?.touched)" class="text-red-600 text-sm">
+                {{ 'clientComponent.form.inputValidation.issueDate' | translate }}
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <label for="expiryDate" class="block text-sm font-medium text-gray-700">
+                {{ 'clientComponent.form.input.expiryDate' | translate }}
+              </label>
+              <input id="expiryDate" type="date" formControlName="expiryDate"
+                     class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+              <div *ngIf="clientForm.get('passport.expiryDate')?.invalid && (clientForm.get('passport.expiryDate')?.dirty || clientForm.get('passport.expiryDate')?.touched)" class="text-red-600 text-sm">
+                {{ 'clientComponent.form.inputValidation.expiryDate' | translate }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="imageFile" class="block text-sm font-medium text-gray-700">
+              {{ 'clientComponent.form.input.profileImage' | translate }}
+            </label>
+          <div class="flex items-center space-x-4">
+            <input id="imageFile" type="file" (change)="onFileSelected($event)"
+                   [placeholder]="'clientComponent.form.input.profileImage' | translate"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+            <button type="button"
+                    (click)="removeImage()"
+                    class="bg-red-500 text-white p-2 rounded-2xl px-3 hover:bg-red-600">
+              {{ 'clientComponent.form.button.remove' | translate }}
+            </button>
+          </div>
+        </div>
+
+
+        <div class="mt-8 flex items-center justify-end space-x-4">
+          <button
+            type="button"
+            class="btn btn-outline-danger text-red-500 border border-red-500 px-4 py-3 rounded-xl hover:bg-red-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+            (click)="onCancel()"
+          >
+            {{'clientComponent.form.button.cancel' | translate}}
+          </button>
+          <button
+            type="submit"
+            [disabled]="!clientForm.valid"
+            class="btn btn-primary bg-blue-500 text-white px-4 py-3 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            {{'clientComponent.form.button.update' | translate}}
+          </button>
+        </div>
+      </form>
+    </ng-template>
+
+  </p-dialog>
+
+
+</div>
+
+
+

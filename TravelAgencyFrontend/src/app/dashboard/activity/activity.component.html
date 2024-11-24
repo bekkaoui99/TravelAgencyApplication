@@ -1,0 +1,286 @@
+<div class="w-full h-full bg-gray-100 p-10">
+
+  <div class="flex items-center justify-center mb-5">
+    <a routerLink='add' class="flex items-center justify-center gap-x-1 rounded-2xl bg-customBlue text-white py-3 px-3">
+      <img src="./assets/icons/plus.png" alt="Add" class="h-5 w-5">
+      <span class="text-white">&nbsp;</span>
+      {{'activityComponent.addActivity' | translate}}
+    </a>
+  </div>
+
+  <div class="shadow-xl bg-white p-5 rounded-xl">
+    <div class="flex justify-between items-center mb-5">
+      <div><h1 class="font-bold text-black text-xl">{{'activityComponent.activityList' | translate}}</h1></div>
+      <div class="flex gap-3 mx-3">
+        <div>
+          <button
+            type="button"
+            class="btn text-white px-3 py-2 rounded-lg shadow-xl border border-gray-300 "
+            [ngClass]="{'text-white bg-lime-700': displayType === 'list' }"
+            (click)="displayType = 'list'"
+          >
+            <i class="pi pi-bars"></i>
+          </button>
+        </div>
+        <div>
+          <button
+            type="button"
+            class="btn text-white px-3 py-2 rounded-lg shadow-xl border border-gray-300"
+            [ngClass]="{'text-white bg-lime-700': displayType === 'grid' }"
+            (click)="displayType = 'grid'"
+          >
+            <i class="pi pi-th-large"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="datatable" *ngIf="displayType === 'list'">
+      <ng-datatable
+        [rows]="rows"
+        [columns]="activityCols"
+        [columnFilter]="true"
+        skin="whitespace-nowrap table-hover"
+        [hasCheckbox]="true"
+        sortColumn="name"
+        (rowSelect)="onRowSelect($event)"
+        [search]="search"
+        firstArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M13 19L7 12L13 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M16.9998 19L10.9998 12L16.9998 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+        lastArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M11 19L17 12L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M6.99976 19L12.9998 12L6.99976 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+        previousArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M15 5L9 12L15 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+        nextArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+      >
+        <ng-template slot="dob" let-value="data"> {{ formatDate(value.dob) }} </ng-template>
+        <ng-template slot="actions" let-row="data">
+          <div class="flex items-center justify-between gap-x-4">
+
+            <a type="button" class="text-customBlueSideBar"
+               [routerLink]="['details', row.id]"
+            >
+              <i class="pi pi-eye"></i>
+            </a>
+            <button type="button" class="text-customBlueSideBar" (click)="cloneActivity(row)">
+              <i class="pi pi-copy"></i>
+            </button>
+            <button type="button" class="text-customBlue" (click)="updateActivity(row)">
+              <i class="pi pi-pencil"></i>
+            </button>
+            <button type="button" class="text-red-500" (click)="removeActivity(row)">
+              <i class="pi pi-trash"></i>
+            </button>
+          </div>
+        </ng-template>
+      </ng-datatable>
+    </div>
+
+
+
+    <ng-container *ngIf="displayType === 'grid'">
+      <div class="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3">
+        <ng-container *ngFor="let activity of rows">
+          <div class="bg-gray-100 py-3 shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105">
+            <div class="flex justify-center items-center">
+              <img [src]="activity.imagesUrl[0]" alt="{{activity.title}}"
+                   class="w-[80%] rounded-xl object-cover" />
+            </div>
+            <div class="p-4">
+              <h2 class="text-xl font-semibold mb-5 text-center">{{activity.title}}</h2>
+              <h2 class="text-xl font-semibold mb-2">
+                <i class="pi pi-map-marker mr-2"></i>
+                {{activity.destination}}
+              </h2>
+              <p class="text-gray-800">
+                Guide: {{activity.activityGuide.firstName}} {{activity.activityGuide.lastName}}
+              </p>
+              <p class="text-gray-800">
+                ActivityType: {{activity.activityType}}
+              </p>
+              <p class="text-gray-800">
+                CostType: {{activity.activityCostType}}
+              </p>
+
+            </div>
+            <div class="flex justify-end">
+              <a class="px-5 py-3 rounded-3xl text-white bg-customBlue mr-2" [routerLink]="['details', activity.id]">View Details</a>
+            </div>
+
+          </div>
+        </ng-container>
+      </div>
+
+    </ng-container>
+  </div>
+
+
+
+  <p-dialog header="Update Activity" [(visible)]="displayDialog" [modal]="true" [style]="{width: '800px'}" (onHide)="onDialogHide()">
+    <ng-template pTemplate="header">
+      {{'activityComponent.updateActivity' | translate}}
+    </ng-template>
+    <ng-template pTemplate="content">
+      <form [formGroup]="updateActivityForm" (ngSubmit)="onSave()" class="space-y-4">
+
+        <!-- Title and Destination -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Title Input -->
+          <div class="mb-5">
+            <label for="title" class="block text-gray-700 text-sm font-bold mb-2">
+              {{ 'activityComponent.form.input.title' | translate }}
+            </label>
+            <input id="title" type="text" formControlName="title"
+                   placeholder="{{ 'activityComponent.form.input.title' | translate }}"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" required />
+            <div *ngIf="updateActivityForm.get('title')?.touched && updateActivityForm.get('title')?.invalid" class="text-red-500 text-sm mt-1">
+              {{ 'activityComponent.form.inputValidation.title' | translate }}
+            </div>
+          </div>
+
+          <!-- Destination Input -->
+          <div class="mb-5">
+            <label for="destination" class="block text-gray-700 text-sm font-bold mb-2">
+              {{ 'activityComponent.form.input.destination' | translate }}
+            </label>
+            <input id="destination" type="text" formControlName="destination"
+                   placeholder="{{ 'activityComponent.form.input.destination' | translate }}"
+                   class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" required />
+            <div *ngIf="updateActivityForm.get('destination')?.touched && updateActivityForm.get('destination')?.invalid" class="text-red-500 text-sm mt-1">
+              {{ 'activityComponent.form.inputValidation.destination' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Type and Activity Cost Type -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Activity Type Dropdown -->
+          <div class="mb-5">
+            <label for="activityType" class="block text-gray-700 text-sm font-bold mb-2">
+              {{ 'activityComponent.form.input.activityType' | translate }}
+            </label>
+            <div class="relative">
+              <select id="activityType" formControlName="activityType"
+                      class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none">
+                <option *ngFor="let type of activityTypes" [value]="type">{{ type }}</option>
+              </select>
+            </div>
+            <div *ngIf="updateActivityForm.get('activityType')?.touched && updateActivityForm.get('activityType')?.invalid" class="text-red-500 text-sm mt-1">
+              {{ 'activityComponent.form.inputValidation.activityType' | translate }}
+            </div>
+          </div>
+
+          <!-- Activity Cost Type Dropdown -->
+          <div class="mb-5">
+            <label for="activityCostType" class="block text-gray-700 text-sm font-bold mb-2">
+              {{ 'activityComponent.form.input.activityCostType' | translate }}
+            </label>
+            <div class="relative">
+              <select id="activityCostType" formControlName="activityCostType"
+                      class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none">
+                <option *ngFor="let costType of activityCostTypes" [value]="costType">{{ costType }}</option>
+              </select>
+            </div>
+            <div *ngIf="updateActivityForm.get('activityCostType')?.touched && updateActivityForm.get('activityCostType')?.invalid" class="text-red-500 text-sm mt-1">
+              {{ 'activityComponent.form.inputValidation.activityCostType' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-5" *ngIf="updateActivityForm.get('activityCostType')?.value === 'EXTRA_COST'">
+          <label for="activityAdditionalPrice" class="block text-gray-700 text-sm font-bold mb-2">
+            {{ 'activityComponent.form.input.activityAdditionalPrice' | translate }}
+          </label>
+          <input id="activityAdditionalPrice" type="number" formControlName="activityAdditionalPrice"
+                 placeholder="{{ 'activityComponent.form.input.activityAdditionalPrice' | translate }}"
+                 class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" />
+          <div *ngIf="updateActivityForm.get('activityAdditionalPrice')?.touched && updateActivityForm.get('activityAdditionalPrice')?.invalid" class="text-red-500 text-sm mt-1">
+            {{ 'activityComponent.form.inputValidation.additionalPrice' | translate }}
+          </div>
+        </div>
+        <!-- Guide ID Dropdown -->
+        <div class="mb-5">
+          <label for="guideId" class="block text-gray-700 text-sm font-bold mb-2">
+            {{ 'activityComponent.form.input.activityGuideId' | translate }}
+          </label>
+          <select id="guideId" formControlName="activityGuideId"
+                  class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none">
+            <option *ngFor="let guide of guides" [value]="guide.id"
+                    [selected]="guide.id === selectedActivity?.activityGuide?.id">
+              {{ guide.firstName }} {{ guide.lastName }}
+            </option>
+          </select>
+          <div *ngIf="updateActivityForm.get('activityGuideId')?.touched && updateActivityForm.get('activityGuideId')?.invalid" class="text-red-500 text-sm mt-1">
+            {{ 'activityComponent.form.inputValidation.activityGuide' | translate }}
+          </div>
+        </div>
+
+        <!-- Short Description -->
+        <div class="mb-5">
+          <label for="shortDescription" class="block text-gray-700 text-sm font-bold mb-2">
+            {{ 'activityComponent.form.input.shortDescription' | translate }}
+          </label>
+          <textarea id="shortDescription" formControlName="shortDescription"
+                    placeholder="{{ 'activityComponent.form.input.shortDescription' | translate }}"
+                    class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" required>
+        </textarea>
+          <div *ngIf="updateActivityForm.get('shortDescription')?.touched && updateActivityForm.get('shortDescription')?.invalid" class="text-red-500 text-sm mt-1">
+            {{ 'activityComponent.form.inputValidation.shortDescription' | translate }}
+          </div>
+        </div>
+
+        <!-- Long Description -->
+        <div class="mb-5">
+          <label for="longDescription" class="block text-gray-700 text-sm font-bold mb-2">
+            {{ 'activityComponent.form.input.longDescription' | translate }}
+          </label>
+          <textarea id="longDescription" formControlName="longDescription"
+                    placeholder="{{ 'activityComponent.form.input.longDescription' | translate }}"
+                    class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none" required>
+        </textarea>
+          <div *ngIf="updateActivityForm.get('longDescription')?.touched && updateActivityForm.get('longDescription')?.invalid" class="text-red-500 text-sm mt-1">
+            {{ 'activityComponent.form.inputValidation.longDescription' | translate }}
+          </div>
+        </div>
+
+        <div class="flex justify-end items-center">
+          <p (click)="addImage()" class="text-customBlue text-xl cursor-pointer flex items-center">
+            <span class="mr-3">{{ 'activityComponent.form.button.addImage' | translate }}</span> <i class="pi pi-plus mr-2"></i>
+          </p>
+        </div>
+
+        <!-- Images Preview with Remove Option -->
+        <div formArrayName="imagesFile" class="space-y-4" *ngIf="imagePreviews.length > 0">
+          <div *ngFor="let image of imagesFormArray.controls; let i = index" [formGroupName]="i" class="flex items-center space-x-2">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+              {{ 'activityComponent.form.input.image' | translate }} {{ i + 1 }}
+            </label>
+            <input type="file" (change)="onFileChange($event, i)" class="border border-gray-300 p-2 rounded-md">
+            <img *ngIf="imagePreviews[i]" [src]="imagePreviews[i]" alt="Image Preview" class="w-32 h-32 object-cover rounded-md border">
+            <button type="button" (click)="removeImage(i)" class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600">Remove</button>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="mt-8 flex items-center justify-end space-x-4">
+          <button type="button" class="btn btn-outline-danger text-red-500 border border-red-500 px-4 py-3 rounded-xl hover:bg-red-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-500" (click)="onCancel()">
+            {{'activityComponent.form.button.cancel' | translate}}
+          </button>
+          <button *ngIf="!clone" type="submit" [disabled]="!updateActivityForm.valid" class="btn btn-primary bg-blue-500 text-white px-4 py-3 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            {{'activityComponent.form.button.update' | translate}}
+          </button>
+          <button *ngIf="clone" type="submit" [disabled]="!updateActivityForm.valid" class="btn btn-primary bg-blue-500 text-white px-4 py-3 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            {{'activityComponent.form.button.clone' | translate}}
+          </button>
+        </div>
+      </form>
+    </ng-template>
+  </p-dialog>
+
+
+
+
+
+</div>
+
+
+

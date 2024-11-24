@@ -1,0 +1,253 @@
+{
+  "app": {
+    "title": "السياحة"
+  },
+  "menu": {
+    "dashboard": "لوحة التحكم",
+    "content": "المحتوى",
+    "reservation": "الحجوزات",
+    "travel": "السفر",
+    "dayTrips": "الرحلات اليومية",
+    "activities": "الأنشطة",
+    "hotels": "الفنادق",
+    "users": "المستخدمون",
+    "client": "العميل",
+    "guide": "المرشد",
+    "statistics": "الإحصائيات",
+    "create_new_travel": "إنشاء رحلة جديدة",
+    "create_new_day_trip": "إنشاء رحلة يومية جديدة",
+    "create_new_activity": "إنشاء نشاط جديد",
+    "create_new_client": "إضافة عميل جديد",
+    "create_new_guide": "إضافة مرشد جديد",
+    "create_new_hotel": "إضافة فندق جديد",
+    "add_companion": "إضافة مرافق",
+    "add_reservation": "إضافة حجز"
+  },
+  "hotelComponent": {
+    "addHotel": "إضافة فندق",
+    "hotelList": "قائمة الفنادق",
+    "updateHotel": "تحديث الفندق",
+    "table": {
+      "columns": {
+        "name": "الاسم",
+        "rate": "التقييم",
+        "city": "المدينة",
+        "country": "الدولة",
+        "actions": "الإجراءات"
+      }
+    },
+    "form": {
+      "input": {
+        "name": "اسم الفندق",
+        "rate": "التقييم",
+        "city": "المدينة",
+        "country": "الدولة"
+      },
+      "button": {
+        "next": "التالي",
+        "back": "السابق",
+        "cancel": "إلغاء",
+        "clone": "نسخ",
+        "update": "تحديث",
+        "add": "إضافة عميل",
+        "remove": "إزالة"
+      },
+      "inputValidation": {
+        "nameRequired": "اسم الفندق مطلوب",
+        "rateRequired": "التقييم مطلوب",
+        "cityRequired": "المدينة مطلوبة",
+        "countryRequired": "الدولة مطلوبة"
+      }
+    }
+  },
+  "clientComponent": {
+    "updateClient": "تحديث العميل",
+    "clientList": "قائمة العملاء",
+    "addClient": "إضافة عميل",
+    "table": {
+      "columns": {
+        "firstName": "الاسم الأول",
+        "lastName": "الاسم الأخير",
+        "cin": "رقم البطاقة الوطنية",
+        "country": "الدولة",
+        "actions": "الإجراءات"
+      }
+    },
+    "form": {
+      "clientSection": "معلومات العميل",
+      "passportSection": "جواز السفر",
+      "input": {
+        "firstName": "الاسم الأول",
+        "lastName": "الاسم الأخير",
+        "phone": "الهاتف",
+        "country": "الدولة",
+        "email": "البريد الإلكتروني",
+        "cin": "رقم البطاقة الوطنية",
+        "password": "كلمة المرور",
+        "confirmationPassword": "تأكيد كلمة المرور",
+        "passportNumber": "رقم جواز السفر",
+        "issueDate": "تاريخ الإصدار",
+        "expiryDate": "تاريخ الانتهاء",
+        "profileImage": "صورة الملف الشخصي"
+      },
+      "button": {
+        "next": "التالي",
+        "back": "السابق",
+        "cancel": "إلغاء",
+        "clone": "نسخ",
+        "update": "تحديث",
+        "add": "إضافة عميل",
+        "remove": "إزالة"
+      },
+      "inputValidation": {
+        "firstName": "الاسم الأول مطلوب ويجب أن يحتوي على 3 أحرف على الأقل.",
+        "lastName": "الاسم الأخير مطلوب ويجب أن يحتوي على حرفين على الأقل.",
+        "phone": "رقم الهاتف مطلوب ويجب أن يكون مكونًا من 10 أرقام.",
+        "country": "الدولة مطلوبة.",
+        "email": "البريد الإلكتروني مطلوب ويجب أن يكون صحيحًا.",
+        "cin": "رقم البطاقة الوطنية مطلوب.",
+        "password": "كلمة المرور مطلوبة ويجب أن تكون مكونة من 8 أحرف على الأقل.",
+        "confirmationPassword": "تأكيد كلمة المرور مطلوب ويجب أن يكون مكونًا من 8 أحرف على الأقل.",
+        "passwordMismatch": "كلمة المرور وتأكيد كلمة المرور غير متطابقين.",
+        "passportNumber": "رقم جواز السفر مطلوب.",
+        "issueDate": "تاريخ الإصدار مطلوب.",
+        "expiryDate": "تاريخ الانتهاء مطلوب."
+      }
+    }
+  },
+  "guideComponent": {
+    "updateGuide": "تحديث المرشد",
+    "guideList": "قائمة المرشدين",
+    "addGuide": "إضافة مرشد",
+    "table": {
+      "columns": {
+        "firstName": "الاسم الأول",
+        "lastName": "الاسم الأخير",
+        "cin": "رقم البطاقة الوطنية",
+        "country": "الدولة",
+        "actions": "الإجراءات"
+      }
+    },
+    "form": {
+      "input": {
+        "firstName": "الاسم الأول",
+        "lastName": "الاسم الأخير",
+        "phone": "الهاتف",
+        "country": "الدولة",
+        "email": "البريد الإلكتروني",
+        "cin": "رقم البطاقة الوطنية",
+        "password": "كلمة المرور",
+        "confirmationPassword": "تأكيد كلمة المرور",
+        "profileImage": "صورة الملف الشخصي"
+      },
+      "button": {
+        "next": "التالي",
+        "back": "السابق",
+        "cancel": "إلغاء",
+        "clone": "نسخ",
+        "update": "تحديث",
+        "add": "إضافة عميل",
+        "remove": "إزالة"
+      },
+      "inputValidation": {
+        "firstName": "الاسم الأول مطلوب ويجب أن يحتوي على 3 أحرف على الأقل.",
+        "lastName": "الاسم الأخير مطلوب ويجب أن يحتوي على حرفين على الأقل.",
+        "phone": "رقم الهاتف مطلوب ويجب أن يكون مكونًا من 10 أرقام.",
+        "country": "الدولة مطلوبة.",
+        "email": "البريد الإلكتروني مطلوب ويجب أن يكون صحيحًا.",
+        "cin": "رقم البطاقة الوطنية مطلوب.",
+        "password": "كلمة المرور مطلوبة ويجب أن تكون مكونة من 8 أحرف على الأقل.",
+        "confirmationPassword": "تأكيد كلمة المرور مطلوب ويجب أن يكون مكونًا من 8 أحرف على الأقل.",
+        "passwordMismatch": "كلمة المرور وتأكيد كلمة المرور غير متطابقين."
+      }
+    }
+  },
+  "activityComponent": {
+    "addActivity": "إضافة نشاط",
+    "updateActivity": "تحديث النشاط",
+    "activityList": "قائمة الأنشطة",
+    "table": {
+      "columns": {
+        "title": "العنوان",
+        "destination": "الوجهة",
+        "activityType": "نوع النشاط",
+        "activityCostType": "نوع تكلفة النشاط",
+        "guide": "المرشد",
+        "actions": "الإجراءات"
+      }
+    },
+    "form": {
+      "input": {
+        "title": "العنوان",
+        "destination": "الوجهة",
+        "activityType": "نوع النشاط",
+        "activityCostType": "نوع تكلفة النشاط",
+        "activityGuideId": "مرشد النشاط",
+        "activityAdditionalPrice": "السعر الإضافي",
+        "shortDescription": "وصف مختصر",
+        "longDescription": "وصف تفصيلي",
+        "image": "صورة"
+      },
+      "button": {
+        "add": "إضافة نشاط",
+        "cancel": "إلغاء",
+        "update": "تحديث",
+        "removeImage": "إزالة",
+        "addImage": "إضافة صورة",
+        "clone": "نسخ"
+      },
+      "inputValidation": {
+        "title": "العنوان مطلوب.",
+        "destination": "الوجهة مطلوبة.",
+        "activityType": "نوع النشاط مطلوب.",
+        "activityCostType": "نوع تكلفة النشاط مطلوب.",
+        "activityGuide": "مرشد النشاط مطلوب.",
+        "additionalPrice": "السعر الإضافي مطلوب إذا كانت التكلفة إضافية.",
+        "shortDescription": "الوصف المختصر مطلوب.",
+        "longDescription": "الوصف التفصيلي مطلوب."
+      }
+    }
+  },
+  "dayTripComponent": {
+    "updateDayTrip": "تحديث الرحلة اليومية",
+    "dayTripList": "قائمة الرحلات اليومية",
+    "addDayTrip": "إضافة رحلة يومية",
+    "table": {
+      "columns": {
+        "title": "العنوان",
+        "destination": "الوجهة",
+        "status": "الحالة",
+        "activities": "الأنشطة",
+        "actions": "الإجراءات"
+      }
+    },
+    "form": {
+      "input": {
+        "title": "العنوان",
+        "destination": "الوجهة",
+        "status": "الحالة",
+        "shortDescription": "وصف مختصر",
+        "longDescription": "وصف تفصيلي",
+        "activityGuideId": "مرشد النشاط",
+        "startTime": "وقت البدء",
+        "endTime": "وقت الانتهاء"
+      },
+      "button": {
+        "add": "إضافة رحلة يومية",
+        "cancel": "إلغاء",
+        "update": "تحديث",
+        "remove": "إزالة",
+        "clone": "نسخ"
+      },
+      "inputValidation": {
+        "title": "العنوان مطلوب.",
+        "destination": "الوجهة مطلوبة.",
+        "status": "الحالة مطلوبة.",
+        "shortDescription": "الوصف المختصر مطلوب.",
+        "longDescription": "الوصف التفصيلي مطلوب.",
+        "startTime": "وقت البدء مطلوب.",
+        "endTime": "وقت الانتهاء مطلوب."
+      }
+    }
+  }
+}

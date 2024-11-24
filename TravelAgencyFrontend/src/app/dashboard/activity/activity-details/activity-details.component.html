@@ -1,0 +1,100 @@
+<div *ngIf="activity">
+  <div class="activity-details-container mx-auto max-w-6xl p-6 bg-white shadow-lg rounded-lg">
+    <!-- Activity Title -->
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">{{ activity.title }}</h2>
+
+    <!-- Images Section -->
+    <div class="flex">
+      <!-- Main Image Container (70%) -->
+      <div class="main-image-container w-[70%] pr-4">
+        <!-- Main Image -->
+        <img
+          [src]="selectedImage"
+          alt="Main Activity Image"
+          class="w-full h-[450px] object-cover rounded-lg shadow-md"
+        />
+      </div>
+
+      <!-- Thumbnail Container (30%) -->
+      <div class="thumbnail-container w-[30%] overflow-auto">
+        <div class="flex flex-wrap gap-2">
+          <div
+            *ngFor="let imageUrl of activity.imagesUrl; let i = index"
+            class="thumbnail cursor-pointer overflow-hidden rounded-lg shadow-md"
+            (click)="onSelectImage(imageUrl)"
+          >
+            <img
+              [src]="imageUrl"
+              alt="Thumbnail"
+              class="w-full h-[150px] object-cover rounded-lg"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Information -->
+    <div class="activity-info mt-6">
+      <div class="mt-10 mb-4 p-4 bg-gray-100 rounded-lg">
+        <h3 class="text-2xl font-semibold mb-3 text-gray-800">Activity Information Details</h3>
+      <!-- Destination -->
+      <p class="text-xl text-gray-600 mb-2">
+        <strong>Destination:</strong> {{ activity.destination }}
+      </p>
+
+      <!-- Short Description -->
+      <p class="text-xl text-gray-600 mb-4">
+        <strong>Short Description:</strong> {{ activity.shortDescription }}
+      </p>
+
+      <!-- Long Description -->
+      <p class="text-xl text-gray-600 mb-4">
+        <strong>Long Description:</strong> {{ activity.longDescription }}
+      </p>
+
+      <!-- Activity Type -->
+      <p class="text-xl text-gray-600 mb-2">
+        <strong>Activity Type:</strong> {{ activity.activityType }}
+      </p>
+
+      <!-- Activity Cost Type -->
+      <p class="text-xl text-gray-600 mb-2">
+        <strong>Cost Type:</strong> {{ activity.activityCostType }}
+      </p>
+
+      <!-- Additional Price -->
+      <div *ngIf="activity.activityCostType === 'EXTRA_COST'" class="mb-4">
+        <p class="text-xl text-gray-600">
+          <strong>Additional Price:</strong> ${{ activity.activityAdditionalPrice }}
+        </p>
+      </div>
+
+      <!-- Start and End Times -->
+      <div *ngIf="activity.startAt && activity.endAt" class="mb-4">
+        <p class="text-xl text-gray-600">
+          <strong>Start Time:</strong> {{ activity.startAt | date: 'short' }}
+        </p>
+        <p class="text-xl text-gray-600">
+          <strong>End Time:</strong> {{ activity.endAt | date: 'short' }}
+        </p>
+      </div>
+
+      </div>
+
+      <!-- Guide Information -->
+      <div class="mt-10 mb-4 p-4 bg-gray-100 rounded-lg">
+        <h3 class="text-2xl font-semibold mb-3 text-gray-800">Guide Information</h3>
+        <p class="text-xl text-gray-700 my-3">
+          <strong>Name:</strong> {{ activity.activityGuide.firstName }} {{ activity.activityGuide.lastName }}
+        </p>
+        <p class="text-xl text-gray-700 my-3">
+          <strong>Email:</strong> {{ activity.activityGuide.email }}
+        </p>
+        <p class="text-xl text-gray-700 my-3">
+          <strong>Phone:</strong> {{ activity.activityGuide.phone }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>

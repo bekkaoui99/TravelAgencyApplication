@@ -1,0 +1,83 @@
+<app-loading [isLoading]="isLoading"></app-loading>
+
+<div class="w-full h-full bg-gray-100 p-10">
+  <form [formGroup]="hotelForm" (ngSubmit)="create()" class="py-12 px-10">
+    <div class="flex flex-wrap -mx-3 mb-10">
+      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+          {{ 'hotelComponent.form.input.name' | translate }}
+        </label>
+        <input class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               id="name" type="text" formControlName="name"
+               [placeholder]="'hotelComponent.form.input.name' | translate"
+        >
+        <div *ngIf="hotelForm.get('name')?.invalid && (hotelForm.get('name')?.dirty || hotelForm.get('name')?.touched)"
+             class="text-red-500 text-sm mt-1">
+          {{ 'hotelComponent.form.inputValidation.nameRequired' | translate }}
+        </div>
+      </div>
+
+      <div class="w-full md:w-1/2 px-3">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="rate">
+          {{ 'hotelComponent.form.input.rate' | translate }}
+        </label>
+        <div class="relative">
+          <select class="shadow appearance-none border rounded-2xl bg-white w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10"
+                  id="rate" formControlName="rate">
+            <option *ngFor="let rating of hotelRatings" [value]="rating">{{ rating }}</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>
+          </div>
+        </div>
+        <div *ngIf="hotelForm.get('rate')?.invalid && (hotelForm.get('rate')?.dirty || hotelForm.get('rate')?.touched)"
+             class="text-red-500 text-sm mt-1">
+          {{ 'hotelComponent.form.inputValidation.rateRequired' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap -mx-3 mb-10">
+      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="city">
+          {{ 'hotelComponent.form.input.city' | translate }}
+        </label>
+        <input class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               id="city" type="text" formControlName="city"
+               [placeholder]=" 'hotelComponent.form.input.city' | translate"
+        >
+        <div *ngIf="hotelForm.get('city')?.invalid && (hotelForm.get('city')?.dirty || hotelForm.get('city')?.touched)"
+             class="text-red-500 text-sm mt-1">
+          {{ 'hotelComponent.form.inputValidation.cityRequired' | translate }}
+        </div>
+      </div>
+      <div class="w-full md:w-1/2 px-3">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="country">
+          {{ 'hotelComponent.form.input.country' | translate }}
+        </label>
+        <input class="shadow appearance-none border rounded-2xl w-full bg-white py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               id="country" type="text" formControlName="country"
+               [placeholder]="'hotelComponent.form.input.country' | translate "
+        >
+        <div *ngIf="hotelForm.get('country')?.invalid && (hotelForm.get('country')?.dirty || hotelForm.get('country')?.touched)"
+             class="text-red-500 text-sm mt-1">
+          {{ 'hotelComponent.form.inputValidation.countryRequired' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="pt-7 flex items-center justify-start gap-x-5">
+      <button type="submit"
+              class="py-3 px-5 text-white bg-customBlue rounded-2xl">
+        {{ 'hotelComponent.addHotel' | translate }}
+      </button>
+      <button type="button"
+              class="py-3 px-5 text-white bg-red-500 rounded-2xl"
+              (click)="onCancel()">
+        {{ 'hotelComponent.form.button.cancel' | translate }}
+      </button>
+    </div>
+  </form>
+</div>
+

@@ -1,0 +1,288 @@
+{
+  "app": {
+    "title": "SIYAHA"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "content": "Content",
+    "reservation": "Reservation",
+    "travel": "Travel",
+    "dayTrips": "DayTrips",
+    "activities": "Activities",
+    "hotels": "Hotels",
+    "users": "Users",
+    "client": "Client",
+    "guide": "Guide",
+    "statistics": "Statistics",
+    "create_new_travel": "Create new Travel",
+    "create_new_day_trip": "Create new DayTrip",
+    "create_new_activity": "Create new Activity",
+    "create_new_client": "Create new Client",
+    "create_new_guide": "Create new Guide",
+    "create_new_hotel": "Create new Hotel",
+    "add_companion": "Add a Companion",
+    "add_reservation": "Add a Reservation"
+  },
+
+  "hotelComponent": {
+    "addHotel": "Add Hotel",
+    "hotelList": "Hotel List",
+    "updateHotel": "Update Hotel",
+    "table": {
+      "columns": {
+        "name": "Name",
+        "rate": "Rate",
+        "city": "City",
+        "country": "Country",
+        "actions": "Action"
+      }
+    },
+    "form": {
+      "input": {
+        "name": "Hotel Name",
+        "rate": "Rating",
+        "city": "City",
+        "country": "Country"
+      },
+      "button": {
+        "next": "Next",
+        "back": "Back",
+        "cancel": "Cancel",
+        "clone": "Clone",
+        "update": "Update",
+        "add": "Add Client",
+        "remove": "Remove"
+      },
+      "inputValidation": {
+        "nameRequired": "Hotel name is required",
+        "rateRequired": "Rating is required",
+        "cityRequired": "City is required",
+        "countryRequired": "Country is required"
+      }
+    }
+  },
+  "clientComponent": {
+    "updateClient": "Update Client",
+    "clientList": "Client List",
+    "addClient": "Add Client",
+    "table": {
+      "columns": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "cin": "CIN",
+        "country": "Country",
+        "actions": "Action"
+      }
+    },
+    "form": {
+      "clientSection": "Client Information",
+      "passportSection": "Passport",
+      "input": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "phone": "Phone",
+        "country": "Country",
+        "email": "Email",
+        "cin": "CIN",
+        "password": "Password",
+        "confirmationPassword": "Confirmation Password",
+        "passportNumber": "Passport Number",
+        "issueDate": "Issue Date",
+        "expiryDate": "Expiry Date",
+        "profileImage": "Profile Image"
+      },
+      "button": {
+        "next": "Next",
+        "back": "Back",
+        "cancel": "Cancel",
+        "clone": "Clone",
+        "update": "Update",
+        "add": "Add Client",
+        "remove": "Remove"
+      },
+      "inputValidation": {
+        "firstName": "First name is required and must be at least 3 characters.",
+        "lastName": "Last name is required and must be at least 2 characters.",
+        "phone": "Phone number is required and must be 10 digits.",
+        "country": "Country is required.",
+        "email": "A valid email is required.",
+        "cin": "A valid CIN is required.",
+        "password": "Password is required and must be at least 8 characters.",
+        "confirmationPassword": "Confirmation Password is required and must be at least 8 characters.",
+        "passwordMismatch": "Password and Confirmation Password do not match.",
+        "passportNumber": "Passport number is required.",
+        "issueDate": "Issue date is required.",
+        "expiryDate": "Expiry date is required."
+      }
+    }
+  },
+  "guideComponent": {
+    "updateGuide": "Update Guide",
+    "guideList": "Guide List",
+    "addGuide": "Add Guide",
+    "table": {
+      "columns": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "cin": "CIN",
+        "country": "Country",
+        "actions": "Action"
+      }
+    },
+    "form": {
+      "input": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "phone": "Phone",
+        "country": "Country",
+        "email": "Email",
+        "cin": "CIN",
+        "password": "Password",
+        "confirmationPassword": "Confirmation Password",
+        "profileImage": "Profile Image"
+      },
+      "button": {
+        "next": "Next",
+        "back": "Back",
+        "cancel": "Cancel",
+        "clone": "Clone",
+        "update": "Update",
+        "add": "Add Client",
+        "remove": "Remove"
+      },
+      "inputValidation": {
+        "firstName": "First name is required and must be at least 3 characters.",
+        "lastName": "Last name is required and must be at least 2 characters.",
+        "phone": "Phone number is required and must be 10 digits.",
+        "country": "Country is required.",
+        "email": "A valid email is required.",
+        "cin": "A valid CIN is required.",
+        "password": "Password is required and must be at least 8 characters.",
+        "confirmationPassword": "Confirmation Password is required and must be at least 8 characters.",
+        "passwordMismatch": "Password and Confirmation Password do not match."
+      }
+    }
+  },
+  "activityComponent": {
+    "addActivity": "Add Activity",
+    "updateActivity": "Update Activity",
+    "activityList": "Activity List",
+    "table": {
+      "columns": {
+        "title": "Title",
+        "destination": "Destination",
+        "activityType": "Activity Type",
+        "activityCostType": "Activity Cost Type",
+        "guide": "Guide",
+        "actions": "Action"
+      }
+    },
+    "form": {
+      "input": {
+        "title": "Title",
+        "destination": "Destination",
+        "activityType": "Activity Type",
+        "activityCostType": "Activity Cost Type",
+        "activityGuideId": "Activity Guide",
+        "activityAdditionalPrice": "Additional Price",
+        "shortDescription": "Short Description",
+        "longDescription": "Long Description",
+        "image": "Image"
+      },
+      "button": {
+        "add": "Add Activity",
+        "cancel": "Cancel",
+        "update": "Update",
+        "removeImage": "Remove",
+        "addImage": "Add Image",
+        "clone": "Clone"
+      },
+      "inputValidation": {
+        "title": "Title is required.",
+        "destination": "Destination is required.",
+        "activityType": "Activity Type is required.",
+        "activityCostType": "Activity Cost Type is required.",
+        "activityGuide": "Activity Guide is required.",
+        "additionalPrice": "Additional price is required when cost type is EXTRA_COST.",
+        "shortDescription": "Short Description is required.",
+        "longDescription": "Long Description is required."
+      }
+    }
+
+  },
+  "dayTripComponent": {
+    "updateDayTrip": "Update Day Trip",
+    "dayTripList": "Day Trip List",
+    "addDayTrip": "Add Day Trip",
+    "table": {
+      "columns": {
+        "title": "Title",
+        "destination": "Destination",
+        "status": "Status",
+        "activities": "Activities",
+        "actions": "Action"
+      }
+    },
+    "form": {
+      "input": {
+        "title": "Title",
+        "destination": "Destination",
+        "status": "Status",
+        "shortDescription": "Short Description",
+        "longDescription": "Long Description",
+        "activityGuideId": "Activity Guide",
+        "startTime": "Start Time",
+        "endTime": "End Time",
+        "images": "Images"
+      },
+      "button": {
+        "next": "Next",
+        "back": "Back",
+        "cancel": "Cancel",
+        "add": "Add Day Trip",
+        "update": "Update Day Trip",
+        "addImage": "Add An Image",
+        "remove": "Remove Image",
+        "addActivity": "Add Activity",
+        "removeActivity": "Remove Activity"
+      },
+      "inputValidation": {
+        "title": "Title is required.",
+        "destination": "Destination is required.",
+        "status": "Status is required.",
+        "shortDescription": "Short description is required and must be at least 10 characters long.",
+        "longDescription": "Long description is required and must be at least 20 characters long.",
+        "activityGuideId": "Please select an activity guide.",
+        "imageFormat": "Invalid image format. Please upload a valid image.",
+        "startAt": "Please select a start time.",
+        "endAt": "Please select an end time."
+      }
+    }
+  },
+  "travelComponent": {
+    "add_travel": "Add Travel",
+    "travel_list": "Travel List",
+    "update_travel": "Update Travel",
+    "form_cancel": "Cancel",
+    "form_update": "Update",
+    "form_clone": "Clone"
+  },
+  "companionComponent": {
+    "add_companion": "Add Companion",
+    "companion_list": "Companion List",
+    "update_companion": "Update Companion",
+    "form_cancel": "Cancel",
+    "form_update": "Update",
+    "form_clone": "Clone"
+  },
+  "reservationComponent": {
+    "add_reservation": "Add Reservation",
+    "reservation_list": "Reservation List",
+    "update_reservation": "Update Reservation",
+    "form_cancel": "Cancel",
+    "form_update": "Update",
+    "form_clone": "Clone"
+  }
+
+
+}
